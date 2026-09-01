@@ -1,0 +1,120 @@
+﻿@import "tailwindcss";
+@config "../tailwind.config.js";
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  * {
+    @apply border-neutral-200;
+  }
+
+  html {
+    @apply bg-background scroll-smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-background text-neutral-800 font-sans antialiased;
+    font-feature-settings: 'cv11' 1, 'tnum' 1;
+  }
+
+  #root {
+    @apply min-h-screen;
+  }
+
+  ::selection {
+    @apply bg-primary/12 text-primary-dark;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  button:disabled,
+  input:disabled,
+  select:disabled,
+  textarea:disabled {
+    @apply cursor-not-allowed;
+  }
+}
+
+@layer components {
+  .app-panel {
+    @apply rounded-2xl border border-neutral-200/80 bg-white shadow-sm;
+  }
+
+  .subtle-grid {
+    background-image:
+      linear-gradient(to right, rgba(17, 17, 132, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(17, 17, 132, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center;
+  }
+
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+
+  .kpi-value {
+    @apply text-[2rem] font-semibold tracking-[-0.04em] text-neutral-900 sm:text-[2.35rem];
+  }
+
+  .metric-value {
+    @apply font-semibold tabular-nums tracking-[-0.03em] text-neutral-900;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(17, 17, 132, 0.16) transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: rgba(17, 17, 132, 0.16);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+}
+
+@media print {
+  header,
+  aside,
+  nav,
+  button,
+  [role="dialog"] {
+    display: none !important;
+  }
+
+  body,
+  #root {
+    background: #fff !important;
+  }
+
+  main {
+    padding: 0 !important;
+  }
+
+  .app-panel {
+    box-shadow: none !important;
+  }
+}
+
