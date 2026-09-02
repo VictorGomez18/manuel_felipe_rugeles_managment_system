@@ -1,4 +1,4 @@
-export interface PayrollPeriodRecord {
+﻿export interface PayrollPeriodRecord {
   id: string
   employeeId: string
   employeeName: string
@@ -13,3 +13,5 @@ export interface PayrollPeriodRecord {
   status: 'pending' | 'partial' | 'paid' | 'overdue'
   paidAmount: number
 }
+
+

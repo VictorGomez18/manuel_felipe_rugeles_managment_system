@@ -35,7 +35,7 @@ const paymentSchema = z.object({
   payrollPeriodId: z.string().min(1, 'Selecciona un periodo'),
   amount: z.coerce.number().positive('El monto debe ser mayor a cero'),
   currency: z.enum(['USD', 'VES']),
-  paymentMethod: z.string().min(1, 'Selecciona un metodo de pago'),
+  paymentMethod: z.string().min(1, 'Selecciona un método de pago'),
   paymentDate: z.string().min(1, 'La fecha de pago es obligatoria'),
   referenceNumber: z.string().optional(),
   notes: z.string().optional(),
@@ -127,7 +127,7 @@ const PeriodForm = ({ formId, employees, selectedEmployeeId, onSubmit, isSaving 
           </Select>
         </div>
         <div className="md:col-span-2">
-          <label className="mb-1.5 block text-sm font-medium text-neutral-700">Fecha limite de pago</label>
+          <label className="mb-1.5 block text-sm font-medium text-neutral-700">Fecha límite de pago</label>
           <Input type="date" {...register('dueDate')} />
         </div>
       </div>
@@ -182,9 +182,9 @@ const PaymentForm = ({ formId, period, methods, onSubmit, isSaving }: { formId: 
           </Select>
         </div>
         <div>
-          <label className="mb-1.5 block text-sm font-medium text-neutral-700">Metodo</label>
+          <label className="mb-1.5 block text-sm font-medium text-neutral-700">Método</label>
           <Select {...register('paymentMethod')} error={!!errors.paymentMethod}>
-            <option value="">Selecciona un metodo</option>
+            <option value="">Selecciona un método</option>
             {methods.map((method) => <option key={method.value} value={method.value}>{method.label}</option>)}
           </Select>
           {errors.paymentMethod ? <p className="mt-1.5 text-xs text-danger">{errors.paymentMethod.message}</p> : null}
@@ -204,7 +204,7 @@ const PaymentForm = ({ formId, period, methods, onSubmit, isSaving }: { formId: 
             {...register('notes')}
             rows={4}
             className="focus-ring w-full rounded-xl border border-neutral-200 bg-white px-3.5 py-3 text-[15px] text-neutral-900 shadow-xs outline-none transition-all duration-150 placeholder:text-neutral-400 hover:border-neutral-300"
-            placeholder="Observaciones del pago de nomina"
+            placeholder="Observaciones del pago de nómina"
           />
         </div>
       </div>
@@ -239,16 +239,16 @@ export const PayrollPage = () => {
     <div className="space-y-5 lg:space-y-6">
       <PageHeader
         eyebrow="Personal"
-        title="Nomina"
-        description="Control de periodos de nomina, montos causados y pagos registrados por empleado."
+        title="Nómina"
+        description="Control de periodos de nómina, montos causados y pagos registrados por empleado."
         actions={can('payroll.manage') ? <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setPeriodDrawerOpen(true)}>Nuevo periodo</Button> : undefined}
       />
 
       {error ? <Card><p className="text-sm text-neutral-500">{error}</p></Card> : null}
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Card><p className="text-sm text-neutral-500">Nomina causada</p><p className="kpi-value mt-3">{formatCurrency(summary.total)}</p></Card>
-        <Card><p className="text-sm text-neutral-500">Nomina pagada</p><p className="kpi-value mt-3">{formatCurrency(summary.paid)}</p></Card>
+        <Card><p className="text-sm text-neutral-500">Nómina causada</p><p className="kpi-value mt-3">{formatCurrency(summary.total)}</p></Card>
+        <Card><p className="text-sm text-neutral-500">Nómina pagada</p><p className="kpi-value mt-3">{formatCurrency(summary.paid)}</p></Card>
         <Card><p className="text-sm text-neutral-500">Saldo pendiente</p><p className="kpi-value mt-3">{formatCurrency(summary.pending)}</p></Card>
         <Card><p className="text-sm text-neutral-500">Periodos abiertos</p><p className="kpi-value mt-3">{summary.employeesPending}</p></Card>
       </div>
@@ -328,7 +328,7 @@ export const PayrollPage = () => {
       <Drawer
         open={periodDrawerOpen}
         onClose={() => setPeriodDrawerOpen(false)}
-        title="Nuevo periodo de nomina"
+        title="Nuevo periodo de nómina"
         description="Crea un periodo causado para un empleado activo."
         footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={() => setPeriodDrawerOpen(false)}>Cancelar</Button><Button type="submit" form="payroll-period-form" isLoading={isSaving}>Guardar periodo</Button></div>}
       >
@@ -351,7 +351,7 @@ export const PayrollPage = () => {
               status: 'pending',
             })
             setPeriodDrawerOpen(false)
-            showToast('success', 'Periodo de nomina creado correctamente.')
+            showToast('success', 'Periodo de nómina creado correctamente.')
           }}
         />
       </Drawer>
@@ -359,7 +359,7 @@ export const PayrollPage = () => {
       <Drawer
         open={paymentDrawerOpen}
         onClose={() => { setPaymentDrawerOpen(false); setSelectedPeriod(null) }}
-        title="Registrar pago de nomina"
+        title="Registrar pago de nómina"
         description="Registra el pago correspondiente al periodo seleccionado."
         footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={() => { setPaymentDrawerOpen(false); setSelectedPeriod(null) }}>Cancelar</Button><Button type="submit" form="payroll-payment-form" isLoading={isSaving}>Registrar pago</Button></div>}
       >
@@ -372,7 +372,7 @@ export const PayrollPage = () => {
             await registerPayrollPayment(values)
             setPaymentDrawerOpen(false)
             setSelectedPeriod(null)
-            showToast('success', 'Pago de nomina registrado correctamente.')
+            showToast('success', 'Pago de nómina registrado correctamente.')
           }}
         />
       </Drawer>
@@ -381,4 +381,6 @@ export const PayrollPage = () => {
     </div>
   )
 }
+
+
 

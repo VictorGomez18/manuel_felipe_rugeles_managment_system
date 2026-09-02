@@ -1,4 +1,4 @@
-export interface ExpenseRecord {
+﻿export interface ExpenseRecord {
   id: string
   expenseDate: string
   categoryId?: string | null
@@ -19,3 +19,5 @@ export interface ExpenseCategoryRecord {
   description?: string | null
   isActive: boolean
 }
+
+

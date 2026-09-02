@@ -35,3 +35,5 @@ export const Modal = ({ open, onClose, title, size = 'md', children, footer }: M
   )
 }
 
+
+

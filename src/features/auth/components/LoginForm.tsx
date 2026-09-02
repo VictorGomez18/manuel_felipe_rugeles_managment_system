@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -7,8 +7,8 @@ import { supabaseConfigError } from '../../../lib/supabase'
 import { useAuth } from '../auth-context'
 
 const loginSchema = z.object({
-  email: z.string().email('Correo electronico invalido'),
-  password: z.string().min(6, 'La contrasena debe tener al menos 6 caracteres'),
+  email: z.string().email('Correo electrónico inválido'),
+  password: z.string().min(6, 'La contraseña debe tener al menos 6 caracteres'),
 })
 
 type LoginFormValues = z.infer<typeof loginSchema>
@@ -60,7 +60,7 @@ export const LoginForm = () => {
 
       <div className="space-y-2">
         <label htmlFor="email" className="block text-sm font-medium text-neutral-700">
-          Correo electronico
+          Correo electrónico
         </label>
         <div
           className={`group flex items-center gap-3 rounded-2xl border bg-white px-4 transition-all ${
@@ -84,7 +84,7 @@ export const LoginForm = () => {
 
       <div className="space-y-2">
         <label htmlFor="password" className="block text-sm font-medium text-neutral-700">
-          Contrasena
+          Contraseña
         </label>
         <div
           className={`group flex items-center gap-3 rounded-2xl border bg-white px-4 transition-all ${
@@ -100,13 +100,13 @@ export const LoginForm = () => {
             autoComplete="current-password"
             {...register('password')}
             className="h-13 w-full border-0 bg-transparent py-3.5 text-sm text-neutral-900 outline-none placeholder:text-neutral-400"
-            placeholder="Contrasena"
+            placeholder="Contraseña"
           />
           <button
             type="button"
             onClick={() => setShowPassword((currentValue) => !currentValue)}
             className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-full text-neutral-400 transition hover:bg-neutral-100 hover:text-neutral-700"
-            aria-label={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
+            aria-label={showPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
             aria-pressed={showPassword}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
@@ -126,12 +126,14 @@ export const LoginForm = () => {
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
             </svg>
-            Iniciando sesion...
+            Iniciando sesión...
           </>
         ) : (
-          'Iniciar sesion'
+          'Iniciar sesión'
         )}
       </button>
     </form>
   )
 }
+
+

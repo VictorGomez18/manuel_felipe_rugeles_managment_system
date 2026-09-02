@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useDebouncedValue } from '../../../hooks/useDebouncedValue'
 import { supabase } from '../../../lib/supabase'
@@ -107,3 +107,5 @@ export const useAuditLogs = () => {
     error: query.error instanceof Error ? query.error.message : null,
   }
 }
+
+

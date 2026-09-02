@@ -42,7 +42,7 @@ const mapEmployee = (row: EmployeeRow): EmployeeRecord => ({
   id: row.id,
   fullName: row.full_name,
   document: formatDocument(row.document_type, row.document_number),
-  phone: row.phone ?? 'Sin telefono',
+  phone: row.phone ?? 'Sin teléfono',
   role: row.role,
   hireDate: row.hire_date,
   baseSalary: Number(row.base_salary ?? 0),
@@ -78,7 +78,7 @@ const fetchEmployeeDetail = async (id: string) => {
   ])
 
   if (employeeResult.error) throw new Error('No se pudo cargar el detalle del empleado.')
-  if (payrollResult.error) throw new Error('No se pudo cargar el historial de nomina del empleado.')
+  if (payrollResult.error) throw new Error('No se pudo cargar el historial de nómina del empleado.')
 
   const payrollHistory = payrollResult.data ?? []
   const payments = payrollHistory.flatMap((period) =>
@@ -178,4 +178,6 @@ export const useEmployeeDetail = (id: string | undefined) =>
     queryFn: () => fetchEmployeeDetail(id ?? ''),
     enabled: Boolean(id),
   })
+
+
 

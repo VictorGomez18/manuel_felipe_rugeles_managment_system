@@ -1,4 +1,4 @@
-import type { User } from '@supabase/supabase-js'
+﻿import type { User } from '@supabase/supabase-js'
 import type { AppPermission, AppRole } from './permissions'
 
 export interface UserProfile {
@@ -26,3 +26,5 @@ export interface AuthContextValue {
   signOut: () => Promise<void>
   can: (permission: AppPermission) => boolean
 }
+
+

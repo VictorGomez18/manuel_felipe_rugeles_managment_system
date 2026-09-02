@@ -8,11 +8,11 @@ import { Select } from '../../../components/ui/Select'
 import type { GuardianFormValues } from '../types'
 
 const guardianSchema = z.object({
-  fullName: z.string().min(3, 'El nombre es obligatorio'),
-  document: z.string().min(5, 'El documento es obligatorio'),
-  phone: z.string().min(7, 'El telefono es obligatorio'),
-  email: z.string().email('El correo no es valido'),
-  address: z.string().min(5, 'La direccion es obligatoria'),
+  fullName: z.string().trim().min(3, 'El nombre es obligatorio').regex(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/, 'El nombre solo puede contener letras'),
+  document: z.string().trim().min(5, 'El documento es obligatorio').regex(/^[VEJGPvejpg]-?\\d{5,10}$/, 'Ingresa un documento válido, por ejemplo V-12345678'),
+  phone: z.string().trim().regex(/^0?\\d{10,11}$/, 'Ingresa un teléfono válido de 10 u 11 dígitos'),
+  email: z.string().email('El correo no es válido'),
+  address: z.string().min(5, 'La dirección es obligatoria'),
   notes: z.string().optional(),
   isActive: z.enum(['true', 'false']),
 })
@@ -53,7 +53,7 @@ export const GuardianForm = ({ onSubmit, initialValues, formId = 'guardian-form'
       })}
       className="space-y-6"
     >
-      <FormSection icon={<UserRound className="h-5 w-5" />} title="Datos del representante" description="Informacion principal para contacto y gestion administrativa.">
+      <FormSection icon={<UserRound className="h-5 w-5" />} title="Datos del representante" description="Información principal para contacto y gestion administrativa.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre completo</label>
@@ -66,8 +66,8 @@ export const GuardianForm = ({ onSubmit, initialValues, formId = 'guardian-form'
             {errors.document ? <p className="mt-1.5 text-xs text-danger">{errors.document.message}</p> : null}
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Telefono</label>
-            <Input {...register('phone')} error={!!errors.phone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />
+            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label>
+            <Input inputMode="numeric" maxLength={11} {...register('phone')} error={!!errors.phone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />
             {errors.phone ? <p className="mt-1.5 text-xs text-danger">{errors.phone.message}</p> : null}
           </div>
           <div>
@@ -76,7 +76,7 @@ export const GuardianForm = ({ onSubmit, initialValues, formId = 'guardian-form'
             {errors.email ? <p className="mt-1.5 text-xs text-danger">{errors.email.message}</p> : null}
           </div>
           <div className="md:col-span-2">
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Direccion</label>
+            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Dirección</label>
             <Input {...register('address')} error={!!errors.address} placeholder="Av. Principal, Calle 5, Casa 23" rightIcon={<MapPin className="h-4 w-4" />} />
             {errors.address ? <p className="mt-1.5 text-xs text-danger">{errors.address.message}</p> : null}
           </div>
@@ -98,3 +98,6 @@ export const GuardianForm = ({ onSubmit, initialValues, formId = 'guardian-form'
     </form>
   )
 }
+
+
+

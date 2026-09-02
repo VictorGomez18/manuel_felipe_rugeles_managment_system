@@ -1,4 +1,4 @@
-export interface LevelRecord {
+﻿export interface LevelRecord {
   id: string
   name: string
   description?: string | null
@@ -37,3 +37,5 @@ export interface TeacherOption {
   id: string
   fullName: string
 }
+
+

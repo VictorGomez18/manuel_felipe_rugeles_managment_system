@@ -38,7 +38,7 @@ export const AuditPage = () => {
           <div className="flex items-center gap-2">
             <div className="rounded-full border border-neutral-200 bg-neutral-25 px-3.5 py-2 text-sm text-neutral-500">{total} registros</div>
             <Button variant="secondary" disabled={page <= 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>Anterior</Button>
-            <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">Pagina {page} de {totalPages}</div>
+            <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">Página {page} de {totalPages}</div>
             <Button variant="secondary" disabled={page >= totalPages} onClick={() => setPage((value) => Math.min(totalPages, value + 1))}>Siguiente</Button>
           </div>
         </div>
@@ -92,4 +92,6 @@ export const AuditPage = () => {
     </div>
   )
 }
+
+
 

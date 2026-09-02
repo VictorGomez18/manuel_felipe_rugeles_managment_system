@@ -1,4 +1,4 @@
-export const appCurrentDate = new Date('2026-08-29T12:00:00-04:00')
+﻿export const appCurrentDate = new Date('2026-08-29T12:00:00-04:00')
 
 export const formatCurrency = (value: number, currency: 'USD' | 'VES' = 'USD') =>
   new Intl.NumberFormat(currency === 'USD' ? 'en-US' : 'es-VE', {
@@ -36,3 +36,5 @@ export const downloadCsv = (filename: string, headers: string[], rows: Array<Arr
   anchor.click()
   URL.revokeObjectURL(url)
 }
+
+

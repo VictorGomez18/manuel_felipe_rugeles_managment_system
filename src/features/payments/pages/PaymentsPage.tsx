@@ -38,7 +38,7 @@ export const PaymentsPage = () => {
       <PageHeader
         eyebrow="Finanzas"
         title="Pagos"
-        description="Registro, seguimiento y anulacion controlada de pagos procesados en el centro."
+        description="Registro, seguimiento y anulación controlada de pagos procesados en el centro."
         actions={can('payments.create') ? <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setDrawerOpen(true)}>Registrar pago</Button> : undefined}
       />
 
@@ -60,7 +60,7 @@ export const PaymentsPage = () => {
             {catalog?.students.map((student) => <option key={student.id} value={student.id}>{student.label}</option>)}
           </Select>
           <Select value={filters.method} onChange={(event) => { setFilters((prev) => ({ ...prev, method: event.target.value })); setPage(1) }}>
-            <option value="all">Todos los metodos</option>
+            <option value="all">Todos los métodos</option>
             {catalog?.methods.map((method) => <option key={method.value} value={method.value}>{method.label}</option>)}
           </Select>
           <Select value={filters.concept} onChange={(event) => { setFilters((prev) => ({ ...prev, concept: event.target.value })); setPage(1) }}>
@@ -79,7 +79,7 @@ export const PaymentsPage = () => {
         {isLoading ? <div className="space-y-4 p-5"><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-full" /></div> : (
           <div className="overflow-x-auto scrollbar-thin">
             <table className="w-full min-w-[1120px] text-sm">
-              <thead className="sticky top-0 z-10 bg-neutral-25"><tr className="border-b border-neutral-200 text-left"><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Recibo</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Alumno</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Representante</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Concepto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Monto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Metodo</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Fecha</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Estado</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Usuario</th><th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Acciones</th></tr></thead>
+              <thead className="sticky top-0 z-10 bg-neutral-25"><tr className="border-b border-neutral-200 text-left"><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Recibo</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Alumno</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Representante</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Concepto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Monto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Método</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Fecha</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Estado</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Usuario</th><th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Acciones</th></tr></thead>
               <tbody>
                 {payments.map((payment) => (
                   <tr key={payment.id} className="border-b border-neutral-100/90">
@@ -103,7 +103,7 @@ export const PaymentsPage = () => {
 
       <div className="flex items-center justify-end gap-2">
         <Button variant="secondary" disabled={page <= 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>Anterior</Button>
-        <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">Pagina {page} de {totalPages}</div>
+        <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">Página {page} de {totalPages}</div>
         <Button variant="secondary" disabled={page >= totalPages} onClick={() => setPage((value) => Math.min(totalPages, value + 1))}>Siguiente</Button>
       </div>
 
@@ -145,12 +145,12 @@ export const PaymentsPage = () => {
         isLoading={isVoiding}
         tone="danger"
         title="Anular pago"
-        description={voidTarget ? `Vas a anular el pago ${voidTarget.receipt}. Esta accion revierte sus asignaciones financieras.` : ''}
+        description={voidTarget ? `Vas a anular el pago ${voidTarget.receipt}. Esta accion revierte sus asignaciónes financieras.` : ''}
         confirmLabel="Anular pago"
       >
         <div>
           <label className="mb-1.5 block text-sm font-medium text-neutral-700">Motivo obligatorio</label>
-          <Input value={voidReason} onChange={(event) => setVoidReason(event.target.value)} placeholder="Describe el motivo de la anulacion" />
+          <Input value={voidReason} onChange={(event) => setVoidReason(event.target.value)} placeholder="Describe el motivo de la anulación" />
         </div>
       </ConfirmDialog>
 
@@ -199,9 +199,9 @@ export const PaymentReceiptPage = () => {
           <div className="border-t border-neutral-200 pt-5 sm:border-l sm:border-t-0 sm:pl-7 sm:pt-0"><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-primary/65">Por concepto de</p><p className="mt-2 text-lg font-semibold text-neutral-900">{payment.conceptName}</p><div className="mt-5 flex items-center gap-2 text-sm text-neutral-500"><span className="h-2 w-2 rounded-full bg-success" />Pago procesado correctamente</div></div>
         </section>
 
-        <section className="overflow-hidden rounded-3xl border border-neutral-200"><div className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 bg-primary px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/70 sm:grid-cols-[minmax(0,1.4fr)_0.8fr_0.8fr_0.7fr]"><span>Descripcion</span><span className="hidden sm:block">Metodo</span><span className="hidden sm:block">Referencia</span><span className="text-right">Importe</span></div><div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 sm:grid-cols-[minmax(0,1.4fr)_0.8fr_0.8fr_0.7fr]"><div><p className="font-semibold text-neutral-900">{payment.conceptName}</p><p className="mt-1 text-sm text-neutral-500">Pago registrado el {formatDate(payment.paymentDate)}</p></div><p className="hidden text-sm text-neutral-700 sm:block">{paymentMethod}</p><p className="hidden truncate text-sm text-neutral-700 sm:block">{payment.referenceNumber || 'No aplica'}</p><p className="text-right text-lg font-semibold tracking-[-0.03em] text-neutral-900">{formatCurrency(payment.amount, payment.currency)}</p></div></section>
+        <section className="overflow-hidden rounded-3xl border border-neutral-200"><div className="grid grid-cols-[minmax(0,1fr)_auto] gap-4 bg-primary px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/70 sm:grid-cols-[minmax(0,1.4fr)_0.8fr_0.8fr_0.7fr]"><span>Descripción</span><span className="hidden sm:block">Método</span><span className="hidden sm:block">Referencia</span><span className="text-right">Importe</span></div><div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5 py-5 sm:grid-cols-[minmax(0,1.4fr)_0.8fr_0.8fr_0.7fr]"><div><p className="font-semibold text-neutral-900">{payment.conceptName}</p><p className="mt-1 text-sm text-neutral-500">Pago registrado el {formatDate(payment.paymentDate)}</p></div><p className="hidden text-sm text-neutral-700 sm:block">{paymentMethod}</p><p className="hidden truncate text-sm text-neutral-700 sm:block">{payment.referenceNumber || 'No aplica'}</p><p className="text-right text-lg font-semibold tracking-[-0.03em] text-neutral-900">{formatCurrency(payment.amount, payment.currency)}</p></div></section>
 
-        <section className="flex flex-col gap-6 border-t border-dashed border-neutral-300 pt-7 sm:flex-row sm:items-end sm:justify-between"><div className="grid gap-4 text-sm sm:grid-cols-2 sm:gap-x-10"><div><p className="text-xs text-neutral-500">Metodo de pago</p><p className="mt-1.5 font-medium text-neutral-900">{paymentMethod}</p></div><div><p className="text-xs text-neutral-500">Referencia</p><p className="mt-1.5 font-medium text-neutral-900">{payment.referenceNumber || 'No aplica'}</p></div><div><p className="text-xs text-neutral-500">Registrado por</p><p className="mt-1.5 font-medium text-neutral-900">{payment.registeredBy || 'Administracion'}</p></div><div><p className="text-xs text-neutral-500">Observaciones</p><p className="mt-1.5 font-medium text-neutral-900">{payment.notes || 'Sin observaciones.'}</p></div></div><div className="min-w-[220px] rounded-3xl bg-primary px-6 py-5 text-white shadow-[0_15px_32px_rgba(17,17,132,0.2)]"><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/65">Total recibido</p><p className="mt-2 text-3xl font-semibold tracking-[-0.05em]">{formatCurrency(payment.amount, payment.currency)}</p></div></section>
+        <section className="flex flex-col gap-6 border-t border-dashed border-neutral-300 pt-7 sm:flex-row sm:items-end sm:justify-between"><div className="grid gap-4 text-sm sm:grid-cols-2 sm:gap-x-10"><div><p className="text-xs text-neutral-500">Método de pago</p><p className="mt-1.5 font-medium text-neutral-900">{paymentMethod}</p></div><div><p className="text-xs text-neutral-500">Referencia</p><p className="mt-1.5 font-medium text-neutral-900">{payment.referenceNumber || 'No aplica'}</p></div><div><p className="text-xs text-neutral-500">Registrado por</p><p className="mt-1.5 font-medium text-neutral-900">{payment.registeredBy || 'Administración'}</p></div><div><p className="text-xs text-neutral-500">Observaciones</p><p className="mt-1.5 font-medium text-neutral-900">{payment.notes || 'Sin observaciones.'}</p></div></div><div className="min-w-[220px] rounded-3xl bg-primary px-6 py-5 text-white shadow-[0_15px_32px_rgba(17,17,132,0.2)]"><p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/65">Total recibido</p><p className="mt-2 text-3xl font-semibold tracking-[-0.05em]">{formatCurrency(payment.amount, payment.currency)}</p></div></section>
 
         
       </div>
@@ -209,6 +209,8 @@ export const PaymentReceiptPage = () => {
     </article>
   </div>
 }
+
+
 
 
 

@@ -80,13 +80,13 @@ export const GuardianDetailPage = () => {
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-lighter text-primary"><UserRound className="h-5 w-5" /></div>
             <div>
               <h3 className="text-base font-semibold text-neutral-900">Datos personales</h3>
-              <p className="mt-1 text-sm text-neutral-500">Informacion base del representante.</p>
+              <p className="mt-1 text-sm text-neutral-500">Información base del representante.</p>
             </div>
           </div>
           <dl className="mt-5 space-y-4 text-sm">
-            <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Telefono</dt><dd className="font-medium text-neutral-900">{guardian.phone}</dd></div>
+            <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Teléfono</dt><dd className="font-medium text-neutral-900">{guardian.phone}</dd></div>
             <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Email</dt><dd className="font-medium text-neutral-900">{guardian.email}</dd></div>
-            <div className="flex items-start justify-between gap-4"><dt className="pt-0.5 text-neutral-500">Direccion</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{guardian.address}</dd></div>
+            <div className="flex items-start justify-between gap-4"><dt className="pt-0.5 text-neutral-500">Dirección</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{guardian.address}</dd></div>
             <div className="flex items-start justify-between gap-4"><dt className="pt-0.5 text-neutral-500">Notas</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{guardian.notes || 'Sin notas'}</dd></div>
           </dl>
         </Card>
@@ -105,7 +105,7 @@ export const GuardianDetailPage = () => {
                 <div className="flex items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-medium text-neutral-900">{student.fullName}</p>
-                    <p className="mt-1 text-sm text-neutral-500">{student.classroom || 'Sin salon asignado'}</p>
+                    <p className="mt-1 text-sm text-neutral-500">{student.classroom || 'Sin salón asignado'}</p>
                   </div>
                   <StatusBadge status={student.status === 'active' ? 'active' : student.status === 'withdrawn' ? 'inactive' : 'info'} label={student.status === 'active' ? 'Activo' : student.status === 'withdrawn' ? 'Retirado' : 'Egresado'} />
                 </div>
@@ -152,3 +152,5 @@ export const GuardianDetailPage = () => {
     </div>
   )
 }
+
+

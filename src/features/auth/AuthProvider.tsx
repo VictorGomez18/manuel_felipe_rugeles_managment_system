@@ -1,11 +1,11 @@
-﻿import { useEffect, useState, type ReactNode } from 'react'
+﻿import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { AuthChangeEvent, Session, User } from '@supabase/supabase-js'
 import { supabase, supabaseConfigError } from '../../lib/supabase'
 import { AuthContext } from './auth-context'
 import type { AuthContextValue, AuthCredentials, UserProfile } from './auth.types'
 import { hasPermission } from './permissions'
 
-const mapAuthError = () => 'No se pudo iniciar sesion. Verifica tus credenciales e intenta nuevamente.'
+const mapAuthError = () => 'No se pudo iniciar sesión. Verifica tus credenciales e intenta nuevamente.'
 
 const mapProfile = (record: {
   id: string
@@ -43,6 +43,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [isLoading, setIsLoading] = useState(Boolean(supabase))
+  const userRef = useRef<User | null>(null)
+  const profileRef = useRef<UserProfile | null>(null)
+
+  useEffect(() => {
+    userRef.current = user
+    profileRef.current = profile
+  }, [profile, user])
 
   useEffect(() => {
     const client = supabase
@@ -97,6 +104,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     void client.auth.getSession().then(({ data }) => handleSession(data.session))
 
     const { data: listener } = client.auth.onAuthStateChange((event, session) => {
+      // Supabase may emit TOKEN_REFRESHED or repeat SIGNED_IN when a tab regains focus.
+      // The current access is still valid, so keep the page mounted and its local state intact.
+      const isCurrentSession = session?.user.id === userRef.current?.id && profileRef.current?.id === session?.user.id
+      if (event === 'TOKEN_REFRESHED' || (event === 'SIGNED_IN' && isCurrentSession)) {
+        if (session?.user) setUser(session.user)
+        return
+      }
+
       void handleSession(session, event)
     })
 
@@ -127,7 +142,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const { error } = await client.auth.signOut()
     if (error) {
-      throw new Error('No se pudo cerrar sesion.')
+      throw new Error('No se pudo cerrar sesión.')
     }
   }
 
@@ -144,3 +159,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
+
+
+
+

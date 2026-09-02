@@ -29,3 +29,5 @@ export const CurrencyInput = ({ value, onChange, placeholder = '0.00', error, id
     </div>
   )
 }
+
+

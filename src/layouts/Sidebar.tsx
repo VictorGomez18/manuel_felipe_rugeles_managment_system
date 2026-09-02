@@ -18,7 +18,7 @@ const navGroups: Array<{
 }> = [
   { label: 'Principal', items: [{ to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', permission: 'dashboard.view' }] },
   {
-    label: 'Gestion academica',
+    label: 'Gestión académica',
     items: [
       { to: '/alumnos', icon: GraduationCap, label: 'Alumnos', permission: 'students.view' },
       { to: '/representantes', icon: UserRound, label: 'Representantes', permission: 'guardians.view' },
@@ -38,16 +38,16 @@ const navGroups: Array<{
     label: 'Personal',
     items: [
       { to: '/empleados', icon: BriefcaseBusiness, label: 'Empleados', permission: 'employees.view' },
-      { to: '/nomina', icon: BookOpenText, label: 'Nomina', permission: 'payroll.view' },
+      { to: '/nomina', icon: BookOpenText, label: 'Nómina', permission: 'payroll.view' },
     ],
   },
-  { label: 'Analisis', items: [{ to: '/reportes', icon: Users2, label: 'Reportes', permission: 'reports.view' }] },
+  { label: 'Análisis', items: [{ to: '/reportes', icon: Users2, label: 'Reportes', permission: 'reports.view' }] },
   {
     label: 'Sistema',
     items: [
       { to: '/usuarios', icon: ShieldCheck, label: 'Usuarios y roles', permission: 'settings.view' },
-      { to: '/configuracion', icon: Settings, label: 'Configuracion', permission: 'settings.view' },
-      { to: '/auditoria', icon: History, label: 'Auditoria', permission: 'audit.view' },
+      { to: '/configuracion', icon: Settings, label: 'Configuración', permission: 'settings.view' },
+      { to: '/auditoria', icon: History, label: 'Auditoría', permission: 'audit.view' },
     ],
   },
 ]
@@ -158,8 +158,8 @@ export const Sidebar = ({ collapsed, mobileOpen, onCloseMobile, onToggleCollapse
             {!collapsed ? (
               <div className="mt-3 flex items-center gap-2 border-t border-white/10 pt-3">
                 <button type="button" onClick={() => navigate('/dashboard')} className="focus-ring inline-flex flex-1 items-center justify-center rounded-xl bg-white/8 px-3 py-2 text-xs font-medium text-white/75 transition-colors duration-150 hover:bg-white/12 hover:text-white">Perfil</button>
-                {can('settings.view') ? <button type="button" onClick={() => navigate('/configuracion')} className="focus-ring inline-flex flex-1 items-center justify-center rounded-xl bg-white/8 px-3 py-2 text-xs font-medium text-white/75 transition-colors duration-150 hover:bg-white/12 hover:text-white">Configuracion</button> : null}
-                <button type="button" aria-label="Cerrar sesion" onClick={() => void handleSignOut()} className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 text-white/75 transition-colors duration-150 hover:bg-white/12 hover:text-white">
+                {can('settings.view') ? <button type="button" onClick={() => navigate('/configuracion')} className="focus-ring inline-flex flex-1 items-center justify-center rounded-xl bg-white/8 px-3 py-2 text-xs font-medium text-white/75 transition-colors duration-150 hover:bg-white/12 hover:text-white">Configuración</button> : null}
+                <button type="button" aria-label="Cerrar sesión" onClick={() => void handleSignOut()} className="focus-ring inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/8 text-white/75 transition-colors duration-150 hover:bg-white/12 hover:text-white">
                   <LogOut className="h-4 w-4" />
                 </button>
               </div>
@@ -170,3 +170,9 @@ export const Sidebar = ({ collapsed, mobileOpen, onCloseMobile, onToggleCollapse
     </>
   )
 }
+
+
+
+
+
+

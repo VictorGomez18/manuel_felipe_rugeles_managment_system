@@ -18,9 +18,9 @@ import type { Guardian, GuardianFormValues } from '../types'
 const mapGuardianToFormValues = (guardian: Guardian): GuardianFormValues => ({
   fullName: guardian.fullName,
   document: guardian.document,
-  phone: guardian.phone === 'Sin telefono' ? '' : guardian.phone,
+  phone: guardian.phone === 'Sin teléfono' ? '' : guardian.phone,
   email: guardian.email === 'Sin email' ? '' : guardian.email,
-  address: guardian.address === 'Sin direccion' ? '' : guardian.address,
+  address: guardian.address === 'Sin dirección' ? '' : guardian.address,
   notes: guardian.notes ?? '',
   isActive: guardian.isActive,
 })
@@ -89,7 +89,7 @@ export const GuardiansListPage = () => {
       <PageHeader
         eyebrow="Comunidad educativa"
         title="Representantes"
-        description="Gestion de representantes, sus datos de contacto y la relacion con alumnos del centro."
+        description="Gestión de representantes, sus datos de contacto y la relacion con alumnos del centro."
         actions={can('guardians.create') ? <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setDrawerOpen(true)}>Nuevo representante</Button> : undefined}
       />
 
@@ -105,7 +105,7 @@ export const GuardiansListPage = () => {
       <Card>
         <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-[minmax(0,1.5fr)_140px]">
-            <Input placeholder="Buscar por nombre, documento, telefono o email..." value={search} onChange={(event) => { setSearch(event.target.value); setPage(1) }} leftIcon={<Search className="h-4 w-4" />} className="pl-10" />
+            <Input placeholder="Buscar por nombre, documento, teléfono o email..." value={search} onChange={(event) => { setSearch(event.target.value); setPage(1) }} leftIcon={<Search className="h-4 w-4" />} className="pl-10" />
             <div className="rounded-full border border-neutral-200 bg-neutral-25 px-3.5 py-2 text-sm text-neutral-500">
               {total} registros
             </div>
@@ -113,7 +113,7 @@ export const GuardiansListPage = () => {
           <div className="flex items-center gap-2">
             <Button variant="secondary" disabled={page <= 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>Anterior</Button>
             <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">
-              Pagina {page} de {totalPages}
+              Página {page} de {totalPages}
             </div>
             <Button variant="secondary" disabled={page >= totalPages} onClick={() => setPage((value) => Math.min(totalPages, value + 1))}>Siguiente</Button>
           </div>
@@ -212,4 +212,6 @@ export const GuardiansListPage = () => {
     </div>
   )
 }
+
+
 

@@ -1,4 +1,4 @@
-export type AppRole = 'admin' | 'director' | 'cashier' | 'teacher'
+﻿export type AppRole = 'admin' | 'director' | 'cashier' | 'teacher'
 
 export type AppPermission =
   | 'dashboard.view'
@@ -112,3 +112,5 @@ export const hasPermission = (role: AppRole | null | undefined, permission: AppP
   if (!role) return false
   return rolePermissions[role].has(permission)
 }
+
+

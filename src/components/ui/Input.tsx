@@ -7,7 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   rightIcon?: ReactNode
 }
 
-export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, error = false, leftIcon, rightIcon, disabled, ...props }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, error = false, leftIcon, rightIcon, disabled, onKeyDown, ...props }, ref) => {
   return (
     <div className="relative">
       {leftIcon ? <span className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-400">{leftIcon}</span> : null}
@@ -23,6 +23,10 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, erro
           disabled && 'bg-neutral-50 text-neutral-400 hover:border-neutral-200',
           className,
         )}
+        onKeyDown={(event) => {
+          if (props.type === 'number' && ['e', 'E', '+', '-'].includes(event.key)) event.preventDefault()
+          onKeyDown?.(event)
+        }}
         {...props}
       />
       {rightIcon ? <span className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400">{rightIcon}</span> : null}
@@ -31,3 +35,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(({ className, erro
 })
 
 Input.displayName = 'Input'
+
+
+

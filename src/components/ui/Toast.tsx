@@ -17,3 +17,5 @@ export const Toast = ({ type, message }: { type: 'success' | 'error' | 'warning'
     </div>
   )
 }
+
+

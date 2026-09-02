@@ -122,7 +122,7 @@ export const StudentDetailPage = () => {
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-lighter text-primary"><GraduationCap className="h-5 w-5" /></div>
               <div>
                 <h3 className="text-base font-semibold text-neutral-900">Datos personales</h3>
-                <p className="mt-1 text-sm text-neutral-500">Informacion base del estudiante.</p>
+                <p className="mt-1 text-sm text-neutral-500">Información base del estudiante.</p>
               </div>
             </div>
             <dl className="mt-5 space-y-4 text-sm">
@@ -137,14 +137,14 @@ export const StudentDetailPage = () => {
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-lighter text-primary"><UserRound className="h-5 w-5" /></div>
               <div>
                 <h3 className="text-base font-semibold text-neutral-900">Representante principal</h3>
-                <p className="mt-1 text-sm text-neutral-500">Contacto y direccion asociados.</p>
+                <p className="mt-1 text-sm text-neutral-500">Contacto y dirección asociados.</p>
               </div>
             </div>
             <dl className="mt-5 space-y-4 text-sm">
               <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Nombre</dt><dd className="font-medium text-neutral-900">{student.guardian}</dd></div>
-              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Telefono</dt><dd className="font-medium text-neutral-900">{student.phone}</dd></div>
+              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Teléfono</dt><dd className="font-medium text-neutral-900">{student.phone}</dd></div>
               <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Email</dt><dd className="font-medium text-neutral-900">{student.email}</dd></div>
-              <div className="flex items-start justify-between gap-4"><dt className="pt-0.5 text-neutral-500">Direccion</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{student.address}</dd></div>
+              <div className="flex items-start justify-between gap-4"><dt className="pt-0.5 text-neutral-500">Dirección</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{student.address}</dd></div>
             </dl>
           </Card>
 
@@ -152,13 +152,13 @@ export const StudentDetailPage = () => {
             <div className="flex items-start gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary-lighter text-primary"><ReceiptText className="h-5 w-5" /></div>
               <div>
-                <h3 className="text-base font-semibold text-neutral-900">Informacion academica</h3>
+                <h3 className="text-base font-semibold text-neutral-900">Información académica</h3>
                 <p className="mt-1 text-sm text-neutral-500">Ubicacion actual del alumno en la estructura del centro.</p>
               </div>
             </div>
             <dl className="mt-5 space-y-4 text-sm">
               <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Nivel</dt><dd className="font-medium text-neutral-900">{student.level}</dd></div>
-              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Salon</dt><dd className="font-medium text-neutral-900">{student.classroom}</dd></div>
+              <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Salón</dt><dd className="font-medium text-neutral-900">{student.classroom}</dd></div>
               <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Estado</dt><dd><StatusBadge status={student.status === 'active' ? 'active' : student.status === 'withdrawn' ? 'inactive' : 'info'} label={statusLabel(student.status)} /></dd></div>
             </dl>
           </Card>
@@ -196,7 +196,7 @@ export const StudentDetailPage = () => {
         <Card padding="none" className="overflow-hidden">
           <div className="overflow-x-auto scrollbar-thin">
             <table className="w-full min-w-[860px] text-sm">
-              <thead className="bg-neutral-25 text-left"><tr className="border-b border-neutral-200"><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Recibo</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Concepto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Fecha</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Metodo</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Monto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Estado</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Usuario</th></tr></thead>
+              <thead className="bg-neutral-25 text-left"><tr className="border-b border-neutral-200"><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Recibo</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Concepto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Fecha</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Método</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Monto</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Estado</th><th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Usuario</th></tr></thead>
               <tbody>{data.payments.length === 0 ? <tr><td colSpan={7} className="px-6 py-8 text-center text-neutral-500">No hay pagos registrados para este alumno.</td></tr> : data.payments.map((payment) => <tr key={payment.id} className="border-b border-neutral-100/90"><td className="px-6 py-4 font-medium text-neutral-900">{payment.receiptNumber}</td><td className="px-6 py-4 text-neutral-700">{payment.conceptName}</td><td className="px-6 py-4 text-neutral-700">{formatDate(payment.paymentDate)}</td><td className="px-6 py-4 text-neutral-700">{paymentMethodLabels[payment.paymentMethod] ?? payment.paymentMethod}</td><td className="px-6 py-4 font-medium tabular-nums text-neutral-900">{formatCurrency(payment.amount, payment.currency)}</td><td className="px-6 py-4"><StatusBadge status={payment.status === 'active' ? 'active' : 'cancelled'} label={payment.status === 'active' ? 'Activo' : 'Anulado'} /></td><td className="px-6 py-4 text-neutral-700">{payment.registeredBy || 'Sin usuario'}</td></tr>)}</tbody>
             </table>
           </div>
@@ -205,7 +205,7 @@ export const StudentDetailPage = () => {
 
       {activeTab === 'guardians' ? (
         <div className="grid gap-4 lg:grid-cols-2">
-          {data.guardians.length === 0 ? <Card><p className="text-sm text-neutral-500">No hay representantes asociados a este alumno.</p></Card> : data.guardians.map((guardian) => <Card key={guardian.id}><div className="flex items-start justify-between gap-4"><div><h3 className="text-base font-semibold text-neutral-900">{guardian.fullName}</h3><p className="mt-1 text-sm text-neutral-500">{guardian.document}</p></div>{guardian.isPrimary ? <StatusBadge status="active" label="Principal" /> : <StatusBadge status="info" label="Secundario" />}</div><dl className="mt-5 space-y-4 text-sm"><div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Parentesco</dt><dd className="font-medium text-neutral-900">{guardian.relationship ?? 'Representante'}</dd></div><div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Telefono</dt><dd className="font-medium text-neutral-900">{guardian.phone}</dd></div><div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Email</dt><dd className="font-medium text-neutral-900">{guardian.email}</dd></div><div className="flex items-start justify-between gap-4"><dt className="text-neutral-500">Direccion</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{guardian.address}</dd></div></dl></Card>)}
+          {data.guardians.length === 0 ? <Card><p className="text-sm text-neutral-500">No hay representantes asociados a este alumno.</p></Card> : data.guardians.map((guardian) => <Card key={guardian.id}><div className="flex items-start justify-between gap-4"><div><h3 className="text-base font-semibold text-neutral-900">{guardian.fullName}</h3><p className="mt-1 text-sm text-neutral-500">{guardian.document}</p></div>{guardian.isPrimary ? <StatusBadge status="active" label="Principal" /> : <StatusBadge status="info" label="Secundario" />}</div><dl className="mt-5 space-y-4 text-sm"><div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Parentesco</dt><dd className="font-medium text-neutral-900">{guardian.relationship ?? 'Representante'}</dd></div><div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Teléfono</dt><dd className="font-medium text-neutral-900">{guardian.phone}</dd></div><div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Email</dt><dd className="font-medium text-neutral-900">{guardian.email}</dd></div><div className="flex items-start justify-between gap-4"><dt className="text-neutral-500">Dirección</dt><dd className="max-w-[18rem] text-right font-medium text-neutral-900">{guardian.address}</dd></div></dl></Card>)}
         </div>
       ) : null}
 
@@ -249,4 +249,6 @@ export const StudentDetailPage = () => {
     </div>
   )
 }
+
+
 

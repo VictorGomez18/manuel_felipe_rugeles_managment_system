@@ -1,4 +1,4 @@
-export interface EmployeeRecord {
+﻿export interface EmployeeRecord {
   id: string
   fullName: string
   document: string
@@ -11,3 +11,5 @@ export interface EmployeeRecord {
   status: 'active' | 'inactive'
   notes?: string | null
 }
+
+

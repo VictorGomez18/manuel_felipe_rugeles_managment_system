@@ -61,7 +61,7 @@ export const EmployeesPage = () => {
       <PageHeader
         eyebrow="Personal"
         title="Empleados"
-        description="Gestion operativa del personal del centro, salarios base y frecuencia de nomina."
+        description="Gestión operativa del personal del centro, salarios base y frecuencia de nómina."
         actions={<Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setDrawerOpen(true)}>Nuevo empleado</Button>}
       />
 
@@ -71,12 +71,12 @@ export const EmployeesPage = () => {
         <Card><p className="text-sm text-neutral-500">Activos</p><p className="kpi-value mt-3">{summary.active}</p></Card>
         <Card><p className="text-sm text-neutral-500">Docentes</p><p className="kpi-value mt-3">{summary.teachers}</p></Card>
         <Card><p className="text-sm text-neutral-500">Administrativos</p><p className="kpi-value mt-3">{summary.admins}</p></Card>
-        <Card><p className="text-sm text-neutral-500">Nomina estimada</p><p className="kpi-value mt-3">{formatCurrency(summary.payrollEstimate)}</p></Card>
+        <Card><p className="text-sm text-neutral-500">Nómina estimada</p><p className="kpi-value mt-3">{formatCurrency(summary.payrollEstimate)}</p></Card>
       </div>
 
       <Card>
         <Input
-          placeholder="Buscar por nombre, documento o telefono..."
+          placeholder="Buscar por nombre, documento o teléfono..."
           value={search}
           onChange={(event) => {
             setSearch(event.target.value)
@@ -100,7 +100,7 @@ export const EmployeesPage = () => {
                 <tr className="border-b border-neutral-200 text-left">
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Nombre</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Documento</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Telefono</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Teléfono</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Cargo</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Ingreso</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Salario</th>
@@ -146,7 +146,7 @@ export const EmployeesPage = () => {
 
       <div className="flex items-center justify-end gap-2">
         <Button variant="secondary" disabled={page <= 1} onClick={() => setPage((value) => Math.max(1, value - 1))}>Anterior</Button>
-        <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">Pagina {page} de {totalPages}</div>
+        <div className="rounded-full border border-neutral-200 bg-white px-3.5 py-2 text-sm text-neutral-600">Página {page} de {totalPages}</div>
         <Button variant="secondary" disabled={page >= totalPages} onClick={() => setPage((value) => Math.min(totalPages, value + 1))}>Siguiente</Button>
       </div>
 
@@ -154,13 +154,13 @@ export const EmployeesPage = () => {
         open={drawerOpen}
         onClose={() => { setDrawerOpen(false); setEditingId(null) }}
         title={employee ? 'Editar empleado' : 'Nuevo empleado'}
-        description="Gestiona datos personales y laborales del personal del centro."
+        description="Gestióna datos personales y laborales del personal del centro."
         footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={() => { setDrawerOpen(false); setEditingId(null) }}>Cancelar</Button><Button type="submit" form="employee-form" isLoading={isSaving}>{employee ? 'Guardar cambios' : 'Guardar empleado'}</Button></div>}
       >
         <form
           id="employee-form"
           onSubmit={(event) => {
-            event.preventDefault()
+            event.preventDefault(); if (!event.currentTarget.reportValidity()) return
             const formData = new FormData(event.currentTarget)
             const values = {
               fullName: String(formData.get('fullName') || ''),
@@ -185,9 +185,9 @@ export const EmployeesPage = () => {
           }}
           className="space-y-3"
         >
-          <Input name="fullName" defaultValue={employee?.fullName || ''} placeholder="Nombre completo" />
-          <Input name="document" defaultValue={employee?.document || ''} placeholder="Documento" />
-          <Input name="phone" defaultValue={employee?.phone || ''} placeholder="Telefono" />
+          <Input required minLength={3} name="fullName" defaultValue={employee?.fullName || ''} placeholder="Nombre completo" />
+          <Input required pattern="[VEJGPvejpg]-?[0-9]{5,10}" name="document" defaultValue={employee?.document || ''} placeholder="Documento" />
+          <Input required inputMode="numeric" pattern="0?[0-9]{10,11}" name="phone" defaultValue={employee?.phone || ''} placeholder="Teléfono" />
           <Select name="role" defaultValue={employee?.role || 'teacher'}>
             <option value="teacher">Docente</option>
             <option value="assistant">Auxiliar</option>
@@ -197,8 +197,8 @@ export const EmployeesPage = () => {
             <option value="kitchen">Cocina</option>
             <option value="other">Otro</option>
           </Select>
-          <Input name="hireDate" type="date" defaultValue={employee?.hireDate || ''} />
-          <Input name="baseSalary" type="number" step="0.01" defaultValue={employee?.baseSalary || ''} placeholder="Salario base" />
+          <Input name="hireDate" type="date" required defaultValue={employee?.hireDate || ''} />
+          <Input name="baseSalary" type="number" required min="0" step="0.01" defaultValue={employee?.baseSalary || ''} placeholder="Salario base" />
           <Select name="currency" defaultValue={employee?.currency || 'USD'}>
             <option value="USD">USD</option>
             <option value="VES">VES</option>
@@ -239,16 +239,16 @@ export const EmployeeDetailPage = () => {
 
       <div className="grid gap-4 lg:grid-cols-2">
         <Card>
-          <h3 className="text-base font-semibold text-neutral-900">Informacion personal</h3>
+          <h3 className="text-base font-semibold text-neutral-900">Información personal</h3>
           <dl className="mt-5 space-y-4 text-sm">
             <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Documento</dt><dd className="font-medium text-neutral-900">{data.employee.document}</dd></div>
-            <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Telefono</dt><dd className="font-medium text-neutral-900">{data.employee.phone}</dd></div>
+            <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Teléfono</dt><dd className="font-medium text-neutral-900">{data.employee.phone}</dd></div>
             <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Cargo</dt><dd className="font-medium text-neutral-900">{roleLabels[data.employee.role] ?? data.employee.role}</dd></div>
           </dl>
         </Card>
 
         <Card>
-          <h3 className="text-base font-semibold text-neutral-900">Informacion laboral</h3>
+          <h3 className="text-base font-semibold text-neutral-900">Información laboral</h3>
           <dl className="mt-5 space-y-4 text-sm">
             <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Ingreso</dt><dd className="font-medium text-neutral-900">{data.employee.hireDate ? formatDate(data.employee.hireDate) : 'Sin fecha'}</dd></div>
             <div className="flex items-center justify-between gap-4"><dt className="text-neutral-500">Salario base</dt><dd className="font-medium text-neutral-900">{formatCurrency(data.employee.baseSalary, data.employee.currency)}</dd></div>
@@ -259,7 +259,7 @@ export const EmployeeDetailPage = () => {
 
       <Card padding="none" className="overflow-hidden">
         <div className="border-b border-neutral-200 px-6 py-4">
-          <h3 className="text-base font-semibold text-neutral-900">Historial de nomina</h3>
+          <h3 className="text-base font-semibold text-neutral-900">Historial de nómina</h3>
           <p className="mt-1 text-sm text-neutral-500">Periodos causados para este empleado.</p>
         </div>
         <div className="overflow-x-auto scrollbar-thin">
@@ -274,7 +274,7 @@ export const EmployeeDetailPage = () => {
             </thead>
             <tbody>
               {data.payrollHistory.length === 0 ? (
-                <tr><td colSpan={4} className="px-6 py-8 text-center text-neutral-500">No hay periodos de nomina registrados.</td></tr>
+                <tr><td colSpan={4} className="px-6 py-8 text-center text-neutral-500">No hay periodos de nómina registrados.</td></tr>
               ) : (
                 data.payrollHistory.map((period) => (
                   <tr key={period.id} className="border-b border-neutral-100/90">
@@ -292,7 +292,7 @@ export const EmployeeDetailPage = () => {
 
       <Card padding="none" className="overflow-hidden">
         <div className="border-b border-neutral-200 px-6 py-4">
-          <h3 className="text-base font-semibold text-neutral-900">Pagos de nomina</h3>
+          <h3 className="text-base font-semibold text-neutral-900">Pagos de nómina</h3>
           <p className="mt-1 text-sm text-neutral-500">Movimientos asociados a sus periodos de pago.</p>
         </div>
         <div className="overflow-x-auto scrollbar-thin">
@@ -301,14 +301,14 @@ export const EmployeeDetailPage = () => {
               <tr className="border-b border-neutral-200">
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Fecha</th>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Periodo</th>
-                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Metodo</th>
+                <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Método</th>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Referencia</th>
                 <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Monto</th>
               </tr>
             </thead>
             <tbody>
               {data.payments.length === 0 ? (
-                <tr><td colSpan={5} className="px-6 py-8 text-center text-neutral-500">No hay pagos de nomina registrados.</td></tr>
+                <tr><td colSpan={5} className="px-6 py-8 text-center text-neutral-500">No hay pagos de nómina registrados.</td></tr>
               ) : (
                 data.payments.map((payment) => (
                   <tr key={payment.id} className="border-b border-neutral-100/90">
@@ -327,4 +327,7 @@ export const EmployeeDetailPage = () => {
     </div>
   )
 }
+
+
+
 

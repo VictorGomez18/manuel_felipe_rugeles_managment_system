@@ -121,7 +121,7 @@ const fallbackData: DashboardData = {
   ],
   alerts: [
     { type: 'warning', message: '3 mensualidades vencidas', detail: 'Requieren seguimiento' },
-    { type: 'info', message: 'Nomina proxima a vencer', detail: '4 empleados pendientes' },
+    { type: 'info', message: 'Nómina proxima a vencer', detail: '4 empleados pendientes' },
   ],
   collection: {
     collected: 3240,
@@ -187,7 +187,7 @@ export const useDashboardData = () => {
       if (periodsResult.error) throw new Error('No se pudo cargar el periodo actual de mensualidades.')
       if (paymentsResult.error) throw new Error('No se pudieron cargar los pagos del dashboard.')
       if (expensesResult.error) throw new Error('No se pudieron cargar los gastos del dashboard.')
-      if (payrollResult.error) throw new Error('No se pudo cargar la nomina del dashboard.')
+      if (payrollResult.error) throw new Error('No se pudo cargar la nómina del dashboard.')
 
       const activeStudents = studentsResult.count ?? 0
       const obligations = obligationsResult.data ?? []
@@ -314,7 +314,7 @@ export const useDashboardData = () => {
       if (payrollSoon.length > 0) {
         alerts.push({
           type: 'info',
-          message: 'Nomina proxima a vencer',
+          message: 'Nómina proxima a vencer',
           detail: `${payrollSoon.length} periodos requieren revision esta semana.`,
         })
       }
@@ -378,6 +378,8 @@ export const useDashboardData = () => {
     },
   })
 }
+
+
 
 
 

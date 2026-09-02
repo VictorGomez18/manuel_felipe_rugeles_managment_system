@@ -44,7 +44,7 @@ const mapExpense = (row: ExpenseRow): ExpenseRecord => {
     id: row.id,
     expenseDate: row.expense_date,
     categoryId: category?.id,
-    categoryName: category?.name ?? 'Sin categoria',
+    categoryName: category?.name ?? 'Sin categoría',
     description: row.description,
     amount: Number(row.amount ?? 0),
     currency: row.currency,
@@ -92,7 +92,7 @@ const fetchExpenses = async (page: number, filters: Record<string, string>) => {
 const fetchCategories = async () => {
   if (!supabase) return [] as ExpenseCategoryRecord[]
   const { data, error } = await supabase.from('expense_categories').select('id, name, description, is_active').order('name')
-  if (error) throw new Error('No se pudieron cargar las categorias de gasto.')
+  if (error) throw new Error('No se pudieron cargar las categorías de gasto.')
   return ((data ?? []) as CategoryRow[]).map((category) => ({ id: category.id, name: category.name, description: category.description, isActive: category.is_active }))
 }
 
@@ -135,13 +135,13 @@ const voidExpense = async ({ id, reason }: { id: string; reason: string }) => {
 const createCategory = async (values: Omit<ExpenseCategoryRecord, 'id'>) => {
   if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
   const { error } = await supabase.from('expense_categories').insert({ name: values.name, description: values.description || null, is_active: values.isActive })
-  if (error) throw new Error('No se pudo registrar la categoria.')
+  if (error) throw new Error('No se pudo registrar la categoría.')
 }
 
 const updateCategory = async ({ id, values }: { id: string; values: Omit<ExpenseCategoryRecord, 'id'> }) => {
   if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
   const { error } = await supabase.from('expense_categories').update({ name: values.name, description: values.description || null, is_active: values.isActive }).eq('id', id)
-  if (error) throw new Error('No se pudo actualizar la categoria.')
+  if (error) throw new Error('No se pudo actualizar la categoría.')
 }
 
 export const useExpenses = () => {
@@ -174,7 +174,7 @@ export const useExpenses = () => {
     const prevMonthExpenses = expenses.filter((item) => item.expenseDate >= PREV_MONTH_START && item.expenseDate < CURRENT_MONTH_START && item.status === 'active')
     const categoryTotals = new Map<string, number>()
     monthExpenses.forEach((item) => categoryTotals.set(item.categoryName, (categoryTotals.get(item.categoryName) ?? 0) + item.amount))
-    const topCategory = [...categoryTotals.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'Sin categoria'
+    const topCategory = [...categoryTotals.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? 'Sin categoría'
     const monthTotal = monthExpenses.reduce((sum, item) => sum + item.amount, 0)
     const prevMonthTotal = prevMonthExpenses.reduce((sum, item) => sum + item.amount, 0)
     const variation = prevMonthTotal > 0 ? Math.round(((monthTotal - prevMonthTotal) / prevMonthTotal) * 100) : 0
@@ -200,5 +200,7 @@ export const useExpenses = () => {
     isSaving: createExpenseMutation.isPending || updateExpenseMutation.isPending || voidExpenseMutation.isPending || createCategoryMutation.isPending || updateCategoryMutation.isPending,
   }
 }
+
+
 
 

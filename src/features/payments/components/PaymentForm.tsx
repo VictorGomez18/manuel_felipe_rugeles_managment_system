@@ -14,7 +14,7 @@ const paymentSchema = z.object({
   conceptId: z.string().optional(),
   amount: z.number().positive('El monto debe ser mayor a cero'),
   currency: z.enum(['USD', 'VES']),
-  paymentMethod: z.string().min(1, 'Selecciona un metodo'),
+  paymentMethod: z.string().min(1, 'Selecciona un método'),
   referenceNumber: z.string().optional(),
   paymentDate: z.string().min(1, 'La fecha es obligatoria'),
   notes: z.string().optional(),
@@ -101,9 +101,9 @@ export const PaymentForm = ({
             </Select>
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Metodo</label>
+            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Método</label>
             <Select {...register('paymentMethod')} error={!!errors.paymentMethod}>
-              <option value="">Selecciona un metodo</option>
+              <option value="">Selecciona un método</option>
               {methods.map((method) => <option key={method.value} value={method.value}>{method.label}</option>)}
             </Select>
             {errors.paymentMethod ? <p className="mt-1.5 text-xs text-danger">{errors.paymentMethod.message}</p> : null}
@@ -122,7 +122,7 @@ export const PaymentForm = ({
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Referencia</label>
-            <Input {...register('referenceNumber')} placeholder="Numero de referencia" />
+            <Input {...register('referenceNumber')} placeholder="Número de referencia" />
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Fecha</label>
@@ -155,4 +155,6 @@ export const PaymentForm = ({
     </form>
   )
 }
+
+
 

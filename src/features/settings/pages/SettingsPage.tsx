@@ -51,7 +51,7 @@ export const SettingsPage = () => {
 
   return (
     <div className="space-y-5 lg:space-y-6">
-      <PageHeader eyebrow="Sistema" title="Configuracion" description="Parametros generales del centro y referencias operativas del sistema." />
+      <PageHeader eyebrow="Sistema" title="Configuración" description="Parametros generales del centro y referencias operativas del sistema." />
       {error ? <Card><p className="text-sm text-neutral-500">{error}</p></Card> : null}
       <Card>
         <form onSubmit={handleSubmit(async (values) => {
@@ -63,14 +63,14 @@ export const SettingsPage = () => {
               monthlyFeeDueDay: parsed.monthlyFeeDueDay,
               exchangeRateUsdVes: parsed.exchangeRateUsdVes,
             })
-            setToast({ type: 'success', message: 'Configuracion actualizada correctamente.' })
+            setToast({ type: 'success', message: 'Configuración actualizada correctamente.' })
           } catch (formError) {
             setToast({ type: 'error', message: formError instanceof Error ? formError.message : 'No se pudo guardar la configuracion.' })
           } finally {
             window.setTimeout(() => setToast(null), 2200)
           }
         })} className="space-y-6">
-          <FormSection icon={<Settings className="h-5 w-5" />} title="Parametros del sistema" description="Configuracion base usada por el modulo administrativo y financiero.">
+          <FormSection icon={<Settings className="h-5 w-5" />} title="Parametros del sistema" description="Configuración base usada por el modulo administrativo y financiero.">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
               <div className="md:col-span-2">
                 <label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre institucional</label>
@@ -103,3 +103,5 @@ export const SettingsPage = () => {
     </div>
   )
 }
+
+

@@ -68,7 +68,7 @@ const fetchPayroll = async (filters: Record<string, string>) => {
   if (filters.periodEnd) query = query.lte('period_end', filters.periodEnd)
 
   const { data, error } = await query
-  if (error) throw new Error('No se pudo cargar la nomina.')
+  if (error) throw new Error('No se pudo cargar la nómina.')
 
   return ((data ?? []) as PayrollRow[]).map(mapPayroll)
 }
@@ -87,7 +87,7 @@ const fetchCatalog = async () => {
     .eq('status', 'active')
     .order('full_name')
 
-  if (error) throw new Error('No se pudo cargar el catalogo de empleados para nomina.')
+  if (error) throw new Error('No se pudo cargar el catalogo de empleados para nómina.')
 
   return {
     employees: (data ?? []).map((employee) => ({
@@ -116,7 +116,7 @@ const createPayrollPeriod = async (values: Omit<PayrollPeriodRecord, 'id' | 'emp
     status: values.status,
   })
 
-  if (error) throw new Error('No se pudo crear el periodo de nomina.')
+  if (error) throw new Error('No se pudo crear el periodo de nómina.')
 }
 
 const registerPayrollPayment = async ({ payrollPeriodId, amount, currency, paymentMethod, referenceNumber, paymentDate, notes }: { payrollPeriodId: string; amount: number; currency: 'USD' | 'VES'; paymentMethod: string; referenceNumber?: string; paymentDate: string; notes?: string }) => {
@@ -132,7 +132,7 @@ const registerPayrollPayment = async ({ payrollPeriodId, amount, currency, payme
     p_notes: notes || null,
   })
 
-  if (error) throw new Error('No se pudo registrar el pago de nomina.')
+  if (error) throw new Error('No se pudo registrar el pago de nómina.')
 }
 
 export const usePayroll = () => {
@@ -179,5 +179,7 @@ export const usePayroll = () => {
     isSaving: createMutation.isPending || payMutation.isPending,
   }
 }
+
+
 
 

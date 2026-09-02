@@ -226,9 +226,9 @@ const toRepresentative = (record: {
   documentType: record.document_type,
   documentNumber: record.document_number,
   document: formatDocument(record.document_type, record.document_number),
-  phone: record.phone ?? 'Sin telefono',
+  phone: record.phone ?? 'Sin teléfono',
   email: record.email ?? 'Sin email',
-  address: record.address ?? 'Sin direccion',
+  address: record.address ?? 'Sin dirección',
 })
 
 const mapStudentRecord = (record: {
@@ -294,7 +294,7 @@ const mapStudentRecord = (record: {
     birthDate: record.birth_date ?? '',
     level: level?.name ?? 'Sin nivel',
     levelId: classroom?.level_id ?? level?.id ?? null,
-    classroom: classroom?.name ?? 'Sin salon',
+    classroom: classroom?.name ?? 'Sin salón',
     classroomId: record.classroom_id,
     monthlyFee: Number(record.monthly_fee ?? 0),
     currency: record.currency,
@@ -302,10 +302,10 @@ const mapStudentRecord = (record: {
     guardian: guardian?.full_name ?? 'Sin representante',
     guardianId: record.primary_guardian_id,
     guardianRelationship: primaryRelation?.relationship ?? 'Representante',
-    phone: guardian?.phone ?? 'Sin telefono',
+    phone: guardian?.phone ?? 'Sin teléfono',
     email: guardian?.email ?? 'Sin email',
     enrollmentDate: record.enrollment_date ?? '',
-    address: guardian?.address ?? 'Sin direccion',
+    address: guardian?.address ?? 'Sin dirección',
     notes: record.notes,
   }
 }
@@ -553,9 +553,9 @@ const fetchStudentDetail = async (id: string): Promise<StudentDetailRecord | nul
       documentType: guardian?.document_type,
       documentNumber: guardian?.document_number,
       document: formatDocument(guardian?.document_type, guardian?.document_number),
-      phone: guardian?.phone ?? 'Sin telefono',
+      phone: guardian?.phone ?? 'Sin teléfono',
       email: guardian?.email ?? 'Sin email',
-      address: guardian?.address ?? 'Sin direccion',
+      address: guardian?.address ?? 'Sin dirección',
       relationship: row.relationship ?? 'Representante',
       isPrimary: row.is_primary,
     }
@@ -660,7 +660,7 @@ const createStudent = async (input: StudentFormValues) => {
       birthDate: input.birthDate,
       level: level?.name ?? 'Sin nivel',
       levelId: input.levelId,
-      classroom: classroom?.name ?? 'Sin salon',
+      classroom: classroom?.name ?? 'Sin salón',
       classroomId: input.classroomId,
       monthlyFee: input.monthlyFee,
       currency: input.currency,
@@ -736,7 +736,7 @@ const updateStudent = async ({ id, values }: { id: string; values: StudentFormVa
             birthDate: values.birthDate,
             level: level?.name ?? 'Sin nivel',
             levelId: values.levelId,
-            classroom: classroom?.name ?? 'Sin salon',
+            classroom: classroom?.name ?? 'Sin salón',
             classroomId: values.classroomId,
             monthlyFee: values.monthlyFee,
             currency: values.currency,
@@ -912,4 +912,7 @@ export const useStudentDetail = (id: string | undefined) =>
     queryFn: () => fetchStudentDetail(id ?? ''),
     enabled: Boolean(id),
   })
+
+
+
 

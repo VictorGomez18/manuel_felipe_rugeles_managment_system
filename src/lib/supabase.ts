@@ -7,7 +7,7 @@ const supabasePublishableKey =
 export const supabaseConfigError =
   !supabaseUrl || !supabasePublishableKey
     ? 'No fue posible conectar con el servicio institucional. ' +
-      'Contacta a la administracion del sistema.'
+      'Contacta a la administración del sistema.'
     : null
 
 export const supabase =
@@ -21,6 +21,8 @@ export const supabase =
         },
       })
     : null
+
+
 
 
 

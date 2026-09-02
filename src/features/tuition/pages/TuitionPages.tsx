@@ -23,7 +23,7 @@ export const TuitionPage = () => {
   return (
     <div className="space-y-5 lg:space-y-6">
       <PageHeader
-        eyebrow="Gestion financiera"
+        eyebrow="Gestión financiera"
         title="Mensualidades"
         description="Consulta y organiza las mensualidades del periodo seleccionado."
         actions={can('tuition.generate') ? <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setConfirmOpen(true)}>Generar mensualidades</Button> : undefined}
@@ -81,7 +81,7 @@ export const TuitionPage = () => {
               <tbody>
                 {obligations.map((item) => (
                   <tr key={item.id} className="border-b border-neutral-100/90">
-                    <td className="px-6 py-4"><p className="font-medium text-neutral-900">{item.studentName}</p><p className="mt-1 text-sm text-neutral-500">{item.classroomName || 'Sin salon'}</p></td>
+                    <td className="px-6 py-4"><p className="font-medium text-neutral-900">{item.studentName}</p><p className="mt-1 text-sm text-neutral-500">{item.classroomName || 'Sin salón'}</p></td>
                     <td className="px-6 py-4 text-neutral-800">{item.guardianName}</td>
                     <td className="px-6 py-4 text-neutral-700">{item.periodLabel}</td>
                     <td className="px-6 py-4 font-medium tabular-nums text-neutral-900">{currency(item.amount)}</td>
@@ -163,7 +163,7 @@ export const ReceivablesPage = () => {
                   const daysLate = Math.max(0, Math.floor((new Date('2026-08-29T12:00:00-04:00').getTime() - new Date(`${item.dueDate}T00:00:00`).getTime()) / 86400000))
                   return (
                     <tr key={item.id} className="border-b border-neutral-100/90">
-                      <td className="px-6 py-4"><p className="font-medium text-neutral-900">{item.studentName}</p><p className="mt-1 text-sm text-neutral-500">{item.classroomName || 'Sin salon'}</p></td>
+                      <td className="px-6 py-4"><p className="font-medium text-neutral-900">{item.studentName}</p><p className="mt-1 text-sm text-neutral-500">{item.classroomName || 'Sin salón'}</p></td>
                       <td className="px-6 py-4 text-neutral-800">{item.guardianName}</td>
                       <td className="px-6 py-4 text-neutral-700">{item.periodLabel}</td>
                       <td className="px-6 py-4 font-medium tabular-nums text-neutral-900">{currency(item.amount)}</td>
@@ -182,5 +182,8 @@ export const ReceivablesPage = () => {
     </div>
   )
 }
+
+
+
 
 

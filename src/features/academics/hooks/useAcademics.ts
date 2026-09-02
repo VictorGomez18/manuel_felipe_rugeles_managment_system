@@ -9,15 +9,6 @@ const academicsKeys = {
   teachers: () => [...academicsKeys.all, 'teachers'] as const,
 }
 
-type LevelQueryRecord = {
-  id: string
-  name: string
-  description?: string | null
-  is_active: boolean
-  students?: Array<{ id: string }> | null
-  classrooms?: Array<{ id: string }> | null
-}
-
 type ClassroomQueryRecord = {
   id: string
   name: string
@@ -35,30 +26,19 @@ const fetchLevels = async (): Promise<LevelRecord[]> => {
 
   const { data, error } = await supabase
     .from('levels')
-    .select(`
-      id,
-      name,
-      description,
-      is_active,
-      students ( id ),
-      classrooms ( id )
-    `)
+    .select('id, name, is_active')
     .order('name')
 
-  if (error) {
-    throw new Error('No se pudieron cargar los niveles.')
-  }
+  if (error) throw new Error('No se pudieron cargar los niveles.')
 
-  return ((data ?? []) as LevelQueryRecord[]).map((level) => ({
+  return (data ?? []).map((level) => ({
     id: level.id,
     name: level.name,
-    description: level.description,
     isActive: level.is_active,
-    studentsCount: level.students?.length ?? 0,
-    classroomsCount: level.classrooms?.length ?? 0,
+    studentsCount: 0,
+    classroomsCount: 0,
   }))
 }
-
 const fetchClassrooms = async (): Promise<ClassroomRecord[]> => {
   if (!supabase) return []
 
@@ -117,11 +97,10 @@ const fetchTeachers = async (): Promise<TeacherOption[]> => {
 }
 
 const createLevel = async (values: LevelFormValues) => {
-  if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
+  if (!supabase) throw new Error('El servicio no está disponible en este momento. Intenta nuevamente más tarde.')
 
   const { error } = await supabase.from('levels').insert({
     name: values.name.trim(),
-    description: values.description?.trim() || null,
     is_active: values.isActive,
   })
 
@@ -129,11 +108,10 @@ const createLevel = async (values: LevelFormValues) => {
 }
 
 const updateLevel = async ({ id, values }: { id: string; values: LevelFormValues }) => {
-  if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
+  if (!supabase) throw new Error('El servicio no está disponible en este momento. Intenta nuevamente más tarde.')
 
   const { error } = await supabase.from('levels').update({
     name: values.name.trim(),
-    description: values.description?.trim() || null,
     is_active: values.isActive,
   }).eq('id', id)
 
@@ -141,14 +119,14 @@ const updateLevel = async ({ id, values }: { id: string; values: LevelFormValues
 }
 
 const toggleLevelStatus = async ({ id, isActive }: { id: string; isActive: boolean }) => {
-  if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
+  if (!supabase) throw new Error('El servicio no está disponible en este momento. Intenta nuevamente más tarde.')
 
   const { error } = await supabase.from('levels').update({ is_active: isActive }).eq('id', id)
   if (error) throw new Error(isActive ? 'No se pudo activar el nivel.' : 'No se pudo desactivar el nivel.')
 }
 
 const createClassroom = async (values: ClassroomFormValues) => {
-  if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
+  if (!supabase) throw new Error('El servicio no está disponible en este momento. Intenta nuevamente más tarde.')
 
   const { error } = await supabase.from('classrooms').insert({
     name: values.name.trim(),
@@ -158,11 +136,11 @@ const createClassroom = async (values: ClassroomFormValues) => {
     is_active: values.isActive,
   })
 
-  if (error) throw new Error('No se pudo registrar el salon.')
+  if (error) throw new Error('No se pudo registrar el salón.')
 }
 
 const updateClassroom = async ({ id, values }: { id: string; values: ClassroomFormValues }) => {
-  if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
+  if (!supabase) throw new Error('El servicio no está disponible en este momento. Intenta nuevamente más tarde.')
 
   const { error } = await supabase.from('classrooms').update({
     name: values.name.trim(),
@@ -172,14 +150,14 @@ const updateClassroom = async ({ id, values }: { id: string; values: ClassroomFo
     is_active: values.isActive,
   }).eq('id', id)
 
-  if (error) throw new Error('No se pudo actualizar el salon.')
+  if (error) throw new Error('No se pudo actualizar el salón.')
 }
 
 const toggleClassroomStatus = async ({ id, isActive }: { id: string; isActive: boolean }) => {
-  if (!supabase) throw new Error('El servicio no esta disponible en este momento. Intenta nuevamente mas tarde.')
+  if (!supabase) throw new Error('El servicio no está disponible en este momento. Intenta nuevamente más tarde.')
 
   const { error } = await supabase.from('classrooms').update({ is_active: isActive }).eq('id', id)
-  if (error) throw new Error(isActive ? 'No se pudo activar el salon.' : 'No se pudo desactivar el salon.')
+  if (error) throw new Error(isActive ? 'No se pudo activar el salón.' : 'No se pudo desactivar el salón.')
 }
 
 export const useAcademics = () => {
@@ -231,4 +209,13 @@ export const useAcademics = () => {
       toggleClassroomMutation.isPending,
   }
 }
+
+
+
+
+
+
+
+
+
 

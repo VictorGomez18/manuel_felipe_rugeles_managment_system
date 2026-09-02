@@ -8,8 +8,7 @@ import { Select } from '../../../components/ui/Select'
 import type { ClassroomFormValues, LevelFormValues, LevelRecord, TeacherOption } from '../types'
 
 const levelSchema = z.object({
-  name: z.string().min(2, 'El nombre del nivel es obligatorio'),
-  description: z.string().optional(),
+  name: z.string().trim().min(2, 'El nombre del nivel es obligatorio'),
   isActive: z.enum(['true', 'false']),
 })
 
@@ -29,11 +28,10 @@ export const LevelForm = ({ onSubmit, initialValues, formId = 'level-form' }: {
     <form id={formId} onSubmit={handleSubmit(async (values) => {
       await onSubmit({
         name: values.name,
-        description: values.description,
         isActive: values.isActive === 'true',
       })
     })} className="space-y-6">
-      <FormSection icon={<BookOpenText className="h-5 w-5" />} title="Nivel educativo" description="Configuracion administrativa de los niveles disponibles en el centro.">
+      <FormSection icon={<BookOpenText className="h-5 w-5" />} title="Nivel educativo" description="Configuración administrativa de los niveles disponibles en el centro.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre</label>
@@ -47,10 +45,7 @@ export const LevelForm = ({ onSubmit, initialValues, formId = 'level-form' }: {
               <option value="false">Inactivo</option>
             </Select>
           </div>
-          <div className="md:col-span-2">
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Descripcion</label>
-            <Input {...register('description')} placeholder="Descripcion del nivel" />
-          </div>
+
         </div>
       </FormSection>
       <button type="submit" className="hidden" aria-hidden="true" disabled={isSubmitting}>Submit</button>
@@ -59,7 +54,7 @@ export const LevelForm = ({ onSubmit, initialValues, formId = 'level-form' }: {
 }
 
 const classroomSchema = z.object({
-  name: z.string().min(2, 'El nombre del salon es obligatorio'),
+  name: z.string().min(2, 'El nombre del salón es obligatorio'),
   levelId: z.string().optional(),
   turn: z.string().min(1, 'Selecciona un turno'),
   teacherId: z.string().optional(),
@@ -90,7 +85,7 @@ export const ClassroomForm = ({ onSubmit, levels, teachers, initialValues, formI
         isActive: values.isActive === 'true',
       })
     })} className="space-y-6">
-      <FormSection icon={<School className="h-5 w-5" />} title="Salon" description="Datos de estructura academica y asignacion basica del salon.">
+      <FormSection icon={<School className="h-5 w-5" />} title="Salón" description="Datos de estructura académica y asignación básica del salón.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre</label>
@@ -100,7 +95,7 @@ export const ClassroomForm = ({ onSubmit, levels, teachers, initialValues, formI
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Turno</label>
             <Select {...register('turn')} error={!!errors.turn}>
-              <option value="morning">Manana</option>
+              <option value="morning">Mañana</option>
               <option value="afternoon">Tarde</option>
               <option value="both">Ambos</option>
             </Select>
@@ -132,4 +127,10 @@ export const ClassroomForm = ({ onSubmit, levels, teachers, initialValues, formI
     </form>
   )
 }
+
+
+
+
+
+
 

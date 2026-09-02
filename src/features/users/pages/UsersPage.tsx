@@ -71,7 +71,7 @@ export const UsersPage = () => {
       <PageHeader
         eyebrow="Sistema"
         title="Usuarios y roles"
-        description="Gestion de perfiles, roles operativos y estado de acceso."
+        description="Gestión de perfiles, roles operativos y estado de acceso."
         actions={profile?.role === 'admin' ? <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setCreateOpen(true)}>Nuevo usuario</Button> : undefined}
       />
 
@@ -80,13 +80,13 @@ export const UsersPage = () => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         <Card><p className="text-sm text-neutral-500">Usuarios cargados</p><p className="kpi-value mt-3">{summary.total}</p></Card>
         <Card><p className="text-sm text-neutral-500">Usuarios activos</p><p className="kpi-value mt-3">{summary.active}</p></Card>
-        <Card><p className="text-sm text-neutral-500">Admins y direccion</p><p className="kpi-value mt-3">{summary.admins}</p></Card>
+        <Card><p className="text-sm text-neutral-500">Admins y dirección</p><p className="kpi-value mt-3">{summary.admins}</p></Card>
         <Card><p className="text-sm text-neutral-500">Docentes</p><p className="kpi-value mt-3">{summary.teachers}</p></Card>
       </div>
 
       <Card>
         <div className="grid grid-cols-1 gap-3 xl:grid-cols-[minmax(0,1.3fr)_180px_180px]">
-          <Input placeholder="Buscar por nombre o telefono..." value={search} onChange={(event) => setSearch(event.target.value)} leftIcon={<Search className="h-4 w-4" />} className="pl-10" />
+          <Input placeholder="Buscar por nombre o teléfono..." value={search} onChange={(event) => setSearch(event.target.value)} leftIcon={<Search className="h-4 w-4" />} className="pl-10" />
           <Select value={role} onChange={(event) => setRole(event.target.value)}>
             <option value="all">Todos los roles</option>
             <option value="admin">Administrador</option>
@@ -112,7 +112,7 @@ export const UsersPage = () => {
                 <tr className="border-b border-neutral-200 text-left">
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Usuario</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Rol</th>
-                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Telefono</th>
+                  <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Teléfono</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Estado</th>
                   <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Actualizado</th>
                   <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Acciones</th>
@@ -128,7 +128,7 @@ export const UsersPage = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 text-neutral-700">{roleLabels[user.role]}</td>
-                    <td className="px-6 py-4 text-neutral-700">{user.phone || 'Sin telefono'}</td>
+                    <td className="px-6 py-4 text-neutral-700">{user.phone || 'Sin teléfono'}</td>
                     <td className="px-6 py-4"><StatusBadge status={user.isActive ? 'active' : 'inactive'} label={user.isActive ? 'Activo' : 'Inactivo'} /></td>
                     <td className="px-6 py-4 text-neutral-700">{user.updatedAt ? formatDateTime(user.updatedAt) : 'Sin registro'}</td>
                     <td className="px-6 py-4">
@@ -158,7 +158,7 @@ export const UsersPage = () => {
           <div className="flex items-center gap-3">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-accent-light text-accent-dark"><Users2 className="h-5 w-5" /></div>
             <div>
-              <h3 className="text-base font-semibold text-neutral-900">Administracion de usuarios</h3>
+              <h3 className="text-base font-semibold text-neutral-900">Administración de usuarios</h3>
               <p className="mt-1 text-sm text-neutral-500">Administra las cuentas, los roles y el estado de acceso del personal autorizado.</p>
             </div>
           </div>
@@ -169,7 +169,7 @@ export const UsersPage = () => {
         open={Boolean(editingUser)}
         onClose={closeDrawer}
         title="Editar usuario"
-        description="Actualiza nombre, telefono, rol operativo y estado del perfil."
+        description="Actualiza nombre, teléfono, rol operativo y estado del perfil."
         footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={closeDrawer}>Cancelar</Button><Button type="submit" form="user-form" isLoading={isSaving}>Guardar cambios</Button></div>}
       >
         <form
@@ -213,7 +213,7 @@ export const UsersPage = () => {
             {errors.role ? <p className="mt-1.5 text-xs text-danger">{errors.role.message}</p> : null}
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Telefono</label>
+            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label>
             <Input {...register('phone')} placeholder="Opcional" />
           </div>
           <div>
@@ -230,7 +230,7 @@ export const UsersPage = () => {
         open={createOpen}
         onClose={() => setCreateOpen(false)}
         title="Crear usuario"
-        description="La cuenta quedara activa con el rol seleccionado. Comparte la contrasena temporal por un canal seguro."
+        description="La cuenta quedara activa con el rol seleccionado. Comparte la contraseña temporal por un canal seguro."
         footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={() => setCreateOpen(false)}>Cancelar</Button><Button type="submit" form="create-user-form" isLoading={isCreating}>Crear usuario</Button></div>}
       >
         <form id="create-user-form" className="space-y-4" onSubmit={async (event: FormEvent<HTMLFormElement>) => {
@@ -247,16 +247,18 @@ export const UsersPage = () => {
           }
         }}>
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre completo</label><Input required value={newUser.fullName} onChange={(event) => setNewUser((value) => ({ ...value, fullName: event.target.value }))} placeholder="Nombre y apellido" /></div>
-          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Correo electronico</label><Input required type="email" value={newUser.email} onChange={(event) => setNewUser((value) => ({ ...value, email: event.target.value }))} placeholder="correo@institucion.edu" /></div>
-          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Contrasena temporal</label><Input required type="password" minLength={8} value={newUser.password} onChange={(event) => setNewUser((value) => ({ ...value, password: event.target.value }))} placeholder="Minimo 8 caracteres" /></div>
+          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Correo electrónico</label><Input required type="email" value={newUser.email} onChange={(event) => setNewUser((value) => ({ ...value, email: event.target.value }))} placeholder="correo@institucion.edu" /></div>
+          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Contraseña temporal</label><Input required type="password" minLength={8} value={newUser.password} onChange={(event) => setNewUser((value) => ({ ...value, password: event.target.value }))} placeholder="Minimo 8 caracteres" /></div>
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Rol</label><Select value={newUser.role} onChange={(event) => setNewUser((value) => ({ ...value, role: event.target.value as AppRole }))}><option value="director">Directora</option><option value="cashier">Caja</option><option value="teacher">Docente</option></Select></div>
-          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Telefono</label><Input value={newUser.phone} onChange={(event) => setNewUser((value) => ({ ...value, phone: event.target.value }))} placeholder="Opcional" /></div>
+          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label><Input value={newUser.phone} onChange={(event) => setNewUser((value) => ({ ...value, phone: event.target.value }))} placeholder="Opcional" /></div>
         </form>
       </Drawer>
       {toast ? <Toast type={toast.type} message={toast.message} /> : null}
     </div>
   )
 }
+
+
 
 
 

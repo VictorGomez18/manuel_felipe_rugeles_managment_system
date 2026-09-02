@@ -67,7 +67,7 @@ const createUser = async (values: CreateUserValues) => {
   }
 
   const { error: profileError } = await supabase.from('profiles').upsert({ id: data.user.id, full_name: values.fullName.trim(), role: values.role, phone: values.phone?.trim() || null, is_active: true })
-  if (profileError) throw new Error('La cuenta fue creada, pero no se pudo completar su configuracion de acceso. Contacta a la administracion del sistema.')
+  if (profileError) throw new Error('La cuenta fue creada, pero no se pudo completar su configuracion de acceso. Contacta a la administración del sistema.')
 }
 
 export const useUsers = () => {
@@ -84,5 +84,7 @@ export const useUsers = () => {
   const summary = useMemo(() => ({ total: users.length, active: users.filter((user) => user.isActive).length, admins: users.filter((user) => user.role === 'admin' || user.role === 'director').length, teachers: users.filter((user) => user.role === 'teacher').length }), [users])
   return { users, search, setSearch, role, setRole, status, setStatus, summary, isLoading: usersQuery.isLoading, error: usersQuery.error instanceof Error ? usersQuery.error.message : null, saveUser: updateMutation.mutateAsync, isSaving: updateMutation.isPending, createUser: createMutation.mutateAsync, isCreating: createMutation.isPending }
 }
+
+
 
 

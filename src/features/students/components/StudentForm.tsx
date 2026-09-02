@@ -13,12 +13,12 @@ import { useStudents } from '../hooks/useStudents'
 import type { StudentFormValues } from '../types'
 
 const studentSchema = z.object({
-  firstName: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
-  lastName: z.string().min(2, 'El apellido debe tener al menos 2 caracteres'),
+  firstName: z.string().trim().min(2, 'El nombre debe tener al menos 2 caracteres').regex(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/, 'El nombre solo puede contener letras'),
+  lastName: z.string().trim().min(2, 'El apellido debe tener al menos 2 caracteres').regex(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/, 'El apellido solo puede contener letras'),
   document: z.string().optional(),
   birthDate: z.string().min(1, 'La fecha de nacimiento es obligatoria'),
   levelId: z.string().min(1, 'Selecciona un nivel'),
-  classroomId: z.string().min(1, 'Selecciona un salon'),
+  classroomId: z.string().min(1, 'Selecciona un salón'),
   monthlyFee: z.number().positive('La mensualidad debe ser mayor a cero'),
   currency: z.enum(['USD', 'VES']),
   enrollmentDate: z.string().min(1, 'La fecha de ingreso es obligatoria'),
@@ -33,9 +33,9 @@ const studentSchema = z.object({
   if (value.representativeMode === 'new') {
     if (!value.newGuardianName || value.newGuardianName.length < 3) context.addIssue({ code: 'custom', path: ['newGuardianName'], message: 'El nombre del representante es obligatorio' })
     if (!value.newGuardianDocument || value.newGuardianDocument.length < 5) context.addIssue({ code: 'custom', path: ['newGuardianDocument'], message: 'El documento es obligatorio' })
-    if (!value.newGuardianPhone || value.newGuardianPhone.length < 7) context.addIssue({ code: 'custom', path: ['newGuardianPhone'], message: 'El telefono es obligatorio' })
-    if (!value.newGuardianEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.newGuardianEmail)) context.addIssue({ code: 'custom', path: ['newGuardianEmail'], message: 'El email no es valido' })
-    if (!value.newGuardianAddress || value.newGuardianAddress.length < 5) context.addIssue({ code: 'custom', path: ['newGuardianAddress'], message: 'La direccion es obligatoria' })
+    if (!value.newGuardianPhone || !/^0?\\d{10,11}$/.test(value.newGuardianPhone)) context.addIssue({ code: 'custom', path: ['newGuardianPhone'], message: 'Ingresa un teléfono válido de 10 u 11 dígitos' })
+    if (!value.newGuardianEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.newGuardianEmail)) context.addIssue({ code: 'custom', path: ['newGuardianEmail'], message: 'El email no es válido' })
+    if (!value.newGuardianAddress || value.newGuardianAddress.length < 5) context.addIssue({ code: 'custom', path: ['newGuardianAddress'], message: 'La dirección es obligatoria' })
   }
 })
 
@@ -144,7 +144,7 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
 
   return (
     <form id={formId} onSubmit={handleSubmit(submitStudent)} className="space-y-6">
-      <FormSection icon={<Users className="h-5 w-5" />} title="Datos personales" description="Informacion basica del estudiante para su registro inicial.">
+      <FormSection icon={<Users className="h-5 w-5" />} title="Datos personales" description="Información básica del estudiante para su registro inicial.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre</label><Input {...register('firstName')} error={!!errors.firstName} placeholder="Sofia" />{errors.firstName ? <p className="mt-1.5 text-xs text-danger">{errors.firstName.message}</p> : null}</div>
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Apellido</label><Input {...register('lastName')} error={!!errors.lastName} placeholder="Perez" />{errors.lastName ? <p className="mt-1.5 text-xs text-danger">{errors.lastName.message}</p> : null}</div>
@@ -153,15 +153,15 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
         </div>
       </FormSection>
 
-      <FormSection icon={<BookOpenText className="h-5 w-5" />} title="Informacion academica" description="Selecciona el nivel, salon y fecha de ingreso del alumno.">
+      <FormSection icon={<BookOpenText className="h-5 w-5" />} title="Información académica" description="Selecciona el nivel, salón y fecha de ingreso del alumno.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Nivel</label><Select {...register('levelId')} error={!!errors.levelId} disabled={isLoading || levels.length === 0}>{levels.length === 0 ? <option value="">Sin niveles disponibles</option> : null}{levels.map((level) => <option key={level.id} value={level.id}>{level.name}</option>)}</Select>{errors.levelId ? <p className="mt-1.5 text-xs text-danger">{errors.levelId.message}</p> : null}</div>
-          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Salon</label><Select {...register('classroomId')} error={!!errors.classroomId} disabled={isLoading || filteredClassrooms.length === 0}>{filteredClassrooms.length === 0 ? <option value="">Sin salones disponibles</option> : null}{filteredClassrooms.map((classroom) => <option key={classroom.id} value={classroom.id}>{classroom.name}</option>)}</Select>{errors.classroomId ? <p className="mt-1.5 text-xs text-danger">{errors.classroomId.message}</p> : null}</div>
+          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Salón</label><Select {...register('classroomId')} error={!!errors.classroomId} disabled={isLoading || filteredClassrooms.length === 0}>{filteredClassrooms.length === 0 ? <option value="">Sin salones disponibles</option> : null}{filteredClassrooms.map((classroom) => <option key={classroom.id} value={classroom.id}>{classroom.name}</option>)}</Select>{errors.classroomId ? <p className="mt-1.5 text-xs text-danger">{errors.classroomId.message}</p> : null}</div>
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Fecha de ingreso</label><Input type="date" {...register('enrollmentDate')} error={!!errors.enrollmentDate} rightIcon={<CalendarDays className="h-4 w-4" />} />{errors.enrollmentDate ? <p className="mt-1.5 text-xs text-danger">{errors.enrollmentDate.message}</p> : null}</div>
         </div>
       </FormSection>
 
-      <FormSection icon={<CircleDollarSign className="h-5 w-5" />} title="Informacion financiera" description="La mensualidad se almacena en la ficha del alumno y alimenta las obligaciones futuras.">
+      <FormSection icon={<CircleDollarSign className="h-5 w-5" />} title="Información financiera" description="La mensualidad se almacena en la ficha del alumno y alimenta las obligaciones futuras.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Mensualidad</label><CurrencyInput id="monthlyFee" name="monthlyFee" value={monthlyFee} onChange={(value) => setValue('monthlyFee', value, { shouldDirty: true, shouldValidate: true })} error={!!errors.monthlyFee} />{errors.monthlyFee ? <p className="mt-1.5 text-xs text-danger">{errors.monthlyFee.message}</p> : null}</div>
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Moneda</label><Select {...register('currency')}><option value="USD">USD</option><option value="VES">VES</option></Select></div>
@@ -175,7 +175,7 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
           <div className="space-y-4">
             <SearchEntityInput
               label="Buscar representante existente"
-              placeholder="Buscar por nombre, documento o telefono..."
+              placeholder="Buscar por nombre, documento o teléfono..."
               query={representativeQuery}
               onQueryChange={setRepresentativeQuery}
               results={matches.map((representative) => ({ id: representative.id, title: representative.fullName, subtitle: `${representative.document} · ${representative.phone}`, meta: representative.relationship }))}
@@ -208,10 +208,10 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre completo</label><Input {...register('newGuardianName')} error={!!errors.newGuardianName} placeholder="Maria Perez" />{errors.newGuardianName ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianName.message}</p> : null}</div>
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Documento</label><Input {...register('newGuardianDocument')} error={!!errors.newGuardianDocument} placeholder="V-12345678" />{errors.newGuardianDocument ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianDocument.message}</p> : null}</div>
-            <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Telefono</label><Input {...register('newGuardianPhone')} error={!!errors.newGuardianPhone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />{errors.newGuardianPhone ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianPhone.message}</p> : null}</div>
+            <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label><Input inputMode="numeric" maxLength={11} {...register('newGuardianPhone')} error={!!errors.newGuardianPhone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />{errors.newGuardianPhone ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianPhone.message}</p> : null}</div>
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Email</label><Input type="email" {...register('newGuardianEmail')} error={!!errors.newGuardianEmail} placeholder="correo@email.com" rightIcon={<Mail className="h-4 w-4" />} />{errors.newGuardianEmail ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianEmail.message}</p> : null}</div>
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Parentesco</label><Input {...register('newGuardianRelationship')} placeholder="Madre" /></div>
-            <div className="md:col-span-2"><label className="mb-1.5 block text-sm font-medium text-neutral-700">Direccion</label><Input {...register('newGuardianAddress')} error={!!errors.newGuardianAddress} placeholder="Av. Principal, Calle 5, Casa 23" rightIcon={<MapPin className="h-4 w-4" />} />{errors.newGuardianAddress ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianAddress.message}</p> : null}</div>
+            <div className="md:col-span-2"><label className="mb-1.5 block text-sm font-medium text-neutral-700">Dirección</label><Input {...register('newGuardianAddress')} error={!!errors.newGuardianAddress} placeholder="Av. Principal, Calle 5, Casa 23" rightIcon={<MapPin className="h-4 w-4" />} />{errors.newGuardianAddress ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianAddress.message}</p> : null}</div>
           </div>
         )}
       </FormSection>
@@ -220,6 +220,10 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
     </form>
   )
 }
+
+
+
+
 
 
 

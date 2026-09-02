@@ -59,3 +59,5 @@ export const SearchEntityInput = ({ label, placeholder, query, onQueryChange, re
     </div>
   )
 }
+
+

@@ -1,4 +1,4 @@
-export interface GuardianStudentSummary {
+﻿export interface GuardianStudentSummary {
   id: string
   fullName: string
   status: 'active' | 'withdrawn' | 'graduated'
@@ -31,3 +31,5 @@ export interface GuardianFormValues {
   notes?: string
   isActive: boolean
 }
+
+

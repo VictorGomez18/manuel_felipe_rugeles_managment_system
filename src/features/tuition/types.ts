@@ -1,4 +1,4 @@
-export interface TuitionRecord {
+﻿export interface TuitionRecord {
   id: string
   studentId: string
   studentName: string
@@ -19,3 +19,5 @@ export interface TuitionFilters {
   classroom: string
   status: string
 }
+
+

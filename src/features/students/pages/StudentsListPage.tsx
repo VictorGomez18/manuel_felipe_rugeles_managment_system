@@ -97,9 +97,9 @@ export const StudentsListPage = () => {
   return (
     <div className="space-y-5 lg:space-y-6">
       <PageHeader
-        eyebrow="Gestion estudiantil"
+        eyebrow="Gestión estudiantil"
         title="Alumnos"
-        description="Gestion de estudiantes, representantes y estados administrativos con una experiencia clara y agradable de usar."
+        description="Gestión de estudiantes, representantes y estados administrativos con una experiencia clara y agradable de usar."
         actions={<Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setDrawerOpen(true)}>Nuevo alumno</Button>}
       />
 
@@ -172,7 +172,7 @@ export const StudentsListPage = () => {
                     <tr className="border-b border-neutral-200 text-left">
                       <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Alumno</th>
                       <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Representante</th>
-                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Salon</th>
+                      <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Salón</th>
                       <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Mensualidad</th>
                       <th className="px-6 py-4 text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Estado</th>
                       <th className="px-6 py-4 text-right text-xs font-semibold uppercase tracking-[0.14em] text-neutral-400">Acciones</th>
@@ -230,7 +230,7 @@ export const StudentsListPage = () => {
                   </div>
                   <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
                     <div><p className="text-neutral-400">Representante</p><p className="mt-1 font-medium text-neutral-800">{student.guardian}</p></div>
-                    <div><p className="text-neutral-400">Salon</p><p className="mt-1 font-medium text-neutral-800">{student.classroom}</p></div>
+                    <div><p className="text-neutral-400">Salón</p><p className="mt-1 font-medium text-neutral-800">{student.classroom}</p></div>
                     <div><p className="text-neutral-400">Mensualidad</p><p className="mt-1 font-medium tabular-nums text-neutral-900">{student.currency} {student.monthlyFee.toFixed(2)}</p></div>
                     <div className="flex items-end justify-end"><span className="inline-flex items-center gap-1 text-sm font-medium text-primary">Ver detalle <ArrowRight className="h-4 w-4" /></span></div>
                   </div>
@@ -270,4 +270,7 @@ export const StudentsListPage = () => {
     </div>
   )
 }
+
+
+
 

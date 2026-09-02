@@ -31,3 +31,5 @@ export const Tabs = ({ tabs, active, onChange }: TabsProps) => {
     </div>
   )
 }
+
+

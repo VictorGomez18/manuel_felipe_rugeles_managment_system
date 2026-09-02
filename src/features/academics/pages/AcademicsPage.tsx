@@ -69,13 +69,13 @@ export const AcademicsPage = () => {
   return (
     <div className="space-y-5 lg:space-y-6">
       <PageHeader
-        eyebrow="Gestion academica"
+        eyebrow="Gestión académica"
         title="Salones y niveles"
-        description="Configuracion academica base del centro con niveles, salones, turnos y asignacion docente."
+        description="Configuración académica base del centro con niveles, salones, turnos y asignación docente."
         actions={can('classrooms.manage') ? (
           <div className="flex flex-wrap gap-3">
             <Button variant="secondary" leftIcon={<BookOpenText className="h-4 w-4" />} onClick={() => setLevelDrawerOpen(true)}>Nuevo nivel</Button>
-            <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setClassroomDrawerOpen(true)}>Nuevo salon</Button>
+            <Button leftIcon={<Plus className="h-4 w-4" />} onClick={() => setClassroomDrawerOpen(true)}>Nuevo salón</Button>
           </div>
         ) : undefined}
       />
@@ -83,7 +83,7 @@ export const AcademicsPage = () => {
       {error ? (
         <Card>
           <div className="space-y-2">
-            <h2 className="text-base font-semibold text-neutral-900">No se pudo cargar la estructura academica</h2>
+            <h2 className="text-base font-semibold text-neutral-900">No se pudo cargar la estructura académica</h2>
             <p className="text-sm text-neutral-500">{error}</p>
           </div>
         </Card>
@@ -91,9 +91,12 @@ export const AcademicsPage = () => {
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
         <Card padding="none" className="overflow-hidden">
-          <div className="border-b border-neutral-200 px-5 py-4 sm:px-6">
-            <h3 className="text-lg font-semibold tracking-[-0.03em] text-neutral-900">Niveles</h3>
-            <p className="mt-1 text-sm text-neutral-500">Catalogo de niveles educativos activos e historicos.</p>
+          <div className="flex items-center justify-between gap-4 border-b border-neutral-200 px-5 py-4 sm:px-6">
+            <div>
+              <h3 className="text-lg font-semibold tracking-[-0.03em] text-neutral-900">Niveles</h3>
+              <p className="mt-1 text-sm text-neutral-500">Catálogo de niveles educativos activos e históricos.</p>
+            </div>
+            {can('classrooms.manage') ? <Button size="sm" variant="secondary" leftIcon={<Plus className="h-4 w-4" />} onClick={() => { setEditingLevel(null); setLevelDrawerOpen(true) }}>Agregar nivel</Button> : null}
           </div>
           {isLoading ? (
             <div className="space-y-4 p-5"><Skeleton className="h-20 w-full" /><Skeleton className="h-20 w-full" /></div>
@@ -108,11 +111,8 @@ export const AcademicsPage = () => {
                       <p className="text-[15px] font-medium text-neutral-900">{level.name}</p>
                       <StatusBadge status={level.isActive ? 'active' : 'inactive'} label={level.isActive ? 'Activo' : 'Inactivo'} />
                     </div>
-                    <p className="mt-1 text-sm text-neutral-500">{level.description || 'Sin descripcion'}</p>
-                    <div className="mt-3 flex flex-wrap gap-2 text-xs text-neutral-500">
-                      <span>{level.classroomsCount} salones</span>
-                      <span>{level.studentsCount} alumnos</span>
-                    </div>
+                    <p className="mt-1 text-sm text-neutral-500">Nivel educativo</p>
+
                   </div>
                   {can('classrooms.manage') ? (
                     <div className="flex items-center gap-2">
@@ -134,7 +134,7 @@ export const AcademicsPage = () => {
           {isLoading ? (
             <div className="space-y-4 p-5"><Skeleton className="h-20 w-full" /><Skeleton className="h-20 w-full" /></div>
           ) : classrooms.length === 0 ? (
-            <EmptyState icon={<School className="h-12 w-12" />} title="No hay salones registrados" description="Registra el primer salon para organizar asignaciones academicas." action={can('classrooms.manage') ? <Button onClick={() => setClassroomDrawerOpen(true)}>Registrar salon</Button> : undefined} />
+            <EmptyState icon={<School className="h-12 w-12" />} title="No hay salones registrados" description="Registra el primer salón para organizar asignaciones académicas." action={can('classrooms.manage') ? <Button onClick={() => setClassroomDrawerOpen(true)}>Registrar salón</Button> : undefined} />
           ) : (
             <div className="divide-y divide-neutral-100">
               {classrooms.map((classroom) => (
@@ -144,7 +144,7 @@ export const AcademicsPage = () => {
                       <p className="text-[15px] font-medium text-neutral-900">{classroom.name}</p>
                       <StatusBadge status={classroom.isActive ? 'active' : 'inactive'} label={classroom.isActive ? 'Activo' : 'Inactivo'} />
                     </div>
-                    <p className="mt-1 text-sm text-neutral-500">{classroom.levelName || 'Sin nivel'} · {classroom.turn === 'morning' ? 'Manana' : classroom.turn === 'afternoon' ? 'Tarde' : 'Ambos'}</p>
+                    <p className="mt-1 text-sm text-neutral-500">{classroom.levelName || 'Sin nivel'} · {classroom.turn === 'morning' ? 'Mañana' : classroom.turn === 'afternoon' ? 'Tarde' : 'Ambos'}</p>
                     <div className="mt-3 flex flex-wrap gap-2 text-xs text-neutral-500">
                       <span>{classroom.teacherName || 'Sin docente asignado'}</span>
                       <span>{classroom.studentsCount} alumnos</span>
@@ -167,7 +167,7 @@ export const AcademicsPage = () => {
         open={levelDrawerOpen}
         onClose={closeLevelDrawer}
         title={editingLevel ? 'Editar nivel' : 'Nuevo nivel'}
-        description={editingLevel ? 'Actualiza la informacion del nivel seleccionado.' : 'Completa la informacion del nivel educativo.'}
+        description={editingLevel ? 'Actualiza la información del nivel seleccionado.' : 'Completa la información del nivel educativo.'}
         footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={closeLevelDrawer}>Cancelar</Button><Button type="submit" form="level-form" isLoading={isSaving}>{editingLevel ? 'Guardar cambios' : 'Guardar nivel'}</Button></div>}
       >
         <LevelForm
@@ -192,9 +192,9 @@ export const AcademicsPage = () => {
       <Drawer
         open={classroomDrawerOpen}
         onClose={closeClassroomDrawer}
-        title={editingClassroom ? 'Editar salon' : 'Nuevo salon'}
-        description={editingClassroom ? 'Actualiza la informacion del salon seleccionado.' : 'Completa la informacion del salon.'}
-        footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={closeClassroomDrawer}>Cancelar</Button><Button type="submit" form="classroom-form" isLoading={isSaving}>{editingClassroom ? 'Guardar cambios' : 'Guardar salon'}</Button></div>}
+        title={editingClassroom ? 'Editar salón' : 'Nuevo salón'}
+        description={editingClassroom ? 'Actualiza la información del salón seleccionado.' : 'Completa la información del salón.'}
+        footer={<div className="flex items-center justify-end gap-3"><Button variant="secondary" onClick={closeClassroomDrawer}>Cancelar</Button><Button type="submit" form="classroom-form" isLoading={isSaving}>{editingClassroom ? 'Guardar cambios' : 'Guardar salón'}</Button></div>}
       >
         <ClassroomForm
           levels={levels}
@@ -203,14 +203,14 @@ export const AcademicsPage = () => {
             try {
               if (editingClassroom) {
                 await updateClassroom({ id: editingClassroom.id, values })
-                showToast('success', 'Salon actualizado correctamente.')
+                showToast('success', 'Salón actualizado correctamente.')
               } else {
                 await createClassroom(values)
-                showToast('success', 'Salon registrado correctamente.')
+                showToast('success', 'Salón registrado correctamente.')
               }
               closeClassroomDrawer()
             } catch (formError) {
-              showToast('error', formError instanceof Error ? formError.message : 'No se pudo guardar el salon.')
+              showToast('error', formError instanceof Error ? formError.message : 'No se pudo guardar el salón.')
             }
           }}
           initialValues={editingClassroom ? mapClassroomValues(editingClassroom) : undefined}
@@ -228,14 +228,14 @@ export const AcademicsPage = () => {
             : toggleClassroomStatus({ id: confirmState.id, isActive: confirmState.nextState })
 
           void action
-            .then(() => showToast('success', `${confirmState.type === 'level' ? 'Nivel' : 'Salon'} ${confirmState.nextState ? 'activado' : 'desactivado'} correctamente.`))
+            .then(() => showToast('success', `${confirmState.type === 'level' ? 'Nivel' : 'Salón'} ${confirmState.nextState ? 'activado' : 'desactivado'} correctamente.`))
             .catch((dialogError) => showToast('error', dialogError instanceof Error ? dialogError.message : 'No se pudo actualizar el estado.'))
             .finally(() => setConfirmState(null))
         }}
         tone="danger"
         isLoading={isSaving}
-        title={confirmState?.nextState ? 'Confirmar activacion' : 'Confirmar desactivacion'}
-        description={confirmState ? `Vas a ${confirmState.nextState ? 'activar' : 'desactivar'} ${confirmState.type === 'level' ? 'el nivel' : 'el salon'} ${confirmState.name}.` : ''}
+        title={confirmState?.nextState ? 'Confirmar activación' : 'Confirmar desactivación'}
+        description={confirmState ? `Vas a ${confirmState.nextState ? 'activar' : 'desactivar'} ${confirmState.type === 'level' ? 'el nivel' : 'el salón'} ${confirmState.name}.` : ''}
         confirmLabel={confirmState?.nextState ? 'Activar' : 'Desactivar'}
       />
 
@@ -243,4 +243,9 @@ export const AcademicsPage = () => {
     </div>
   )
 }
+
+
+
+
+
 

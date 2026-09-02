@@ -1,4 +1,4 @@
-import { LoginForm } from '../components/LoginForm'
+﻿import { LoginForm } from '../components/LoginForm'
 import logo from '../../../assets/logo.jpeg'
 
 export const LoginPage = () => {
@@ -44,13 +44,13 @@ export const LoginPage = () => {
                 </div>
                 <p className="mt-5 text-xs uppercase tracking-[0.28em] text-primary/70">CEI Manuel Felipe Rugeles</p>
                 <h1 className="mt-3 text-3xl font-semibold tracking-[-0.04em] text-neutral-900">
-                  Iniciar sesion
+                  Iniciar sesión
                 </h1>
               </div>
 
               <div className="hidden xl:block">
                 <h2 className="text-4xl font-semibold tracking-[-0.05em] text-neutral-900">
-                  Inicia sesion
+                  Inicia sesión
                 </h2>
               </div>
 
@@ -64,3 +64,5 @@ export const LoginPage = () => {
     </div>
   )
 }
+
+

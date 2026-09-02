@@ -105,9 +105,9 @@ const mapGuardian = (record: GuardianRecord): Guardian => {
     documentType: record.document_type,
     documentNumber: record.document_number,
     document: formatDocument(record.document_type, record.document_number),
-    phone: record.phone ?? 'Sin telefono',
+    phone: record.phone ?? 'Sin teléfono',
     email: record.email ?? 'Sin email',
-    address: record.address ?? 'Sin direccion',
+    address: record.address ?? 'Sin dirección',
     notes: record.notes,
     isActive: record.is_active,
     students,
@@ -364,4 +364,6 @@ export const useGuardianDetail = (id: string | undefined) => {
     enabled: Boolean(id),
   })
 }
+
+
 

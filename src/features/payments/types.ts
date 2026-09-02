@@ -1,4 +1,4 @@
-export interface PaymentRecord {
+﻿export interface PaymentRecord {
   id: string
   receiptNumber: string
   studentId: string
@@ -28,3 +28,5 @@ export interface PaymentFormValues {
   paymentDate: string
   notes?: string
 }
+
+

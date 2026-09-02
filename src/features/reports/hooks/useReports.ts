@@ -60,7 +60,7 @@ const fetchReports = async (filters: ReportsFilters): Promise<ReportsData> => {
 
   if (paymentsResult.error) throw new Error('No se pudieron cargar los pagos para reportes.')
   if (expensesResult.error) throw new Error('No se pudieron cargar los gastos para reportes.')
-  if (payrollResult.error) throw new Error('No se pudo cargar la nomina para reportes.')
+  if (payrollResult.error) throw new Error('No se pudo cargar la nómina para reportes.')
   if (receivablesResult.error) throw new Error('No se pudieron cargar las cuentas por cobrar para reportes.')
 
   const payments = (paymentsResult.data ?? []).filter((item) => item.status === 'active')
@@ -75,7 +75,7 @@ const fetchReports = async (filters: ReportsFilters): Promise<ReportsData> => {
     return {
       student: student ? `${student.first_name} ${student.last_name}` : 'Alumno sin nombre',
       guardian: guardianValue?.full_name ?? 'Sin representante',
-      classroom: classroomValue?.name ?? 'Sin salon',
+      classroom: classroomValue?.name ?? 'Sin salón',
       dueDate: row.due_date,
       balance,
     }
@@ -100,7 +100,7 @@ const fetchReports = async (filters: ReportsFilters): Promise<ReportsData> => {
   const expensesMap = new Map<string, { total: number; count: number }>()
   expenses.forEach((expense) => {
     const categoryValue = expense.expense_categories ? (Array.isArray(expense.expense_categories) ? expense.expense_categories[0] : expense.expense_categories) : null
-    const key = categoryValue?.name ?? 'Sin categoria'
+    const key = categoryValue?.name ?? 'Sin categoría'
     const current = expensesMap.get(key) ?? { total: 0, count: 0 }
     expensesMap.set(key, { total: current.total + Number(expense.amount ?? 0), count: current.count + 1 })
   })
@@ -160,4 +160,6 @@ export const useReports = (filters: ReportsFilters) => {
     error: reportsQuery.error instanceof Error ? reportsQuery.error.message : null,
   }
 }
+
+
 

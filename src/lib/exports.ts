@@ -27,7 +27,7 @@ export const downloadReportPdf = (filename: string, title: string, period: strin
     if (y > 700) y = 72
   })
   const pages = doc.getNumberOfPages()
-  for (let page = 1; page <= pages; page += 1) { doc.setPage(page); doc.setTextColor(120, 129, 145); doc.setFontSize(8); doc.text(`Generado el ${new Intl.DateTimeFormat('es-VE', { dateStyle: 'medium' }).format(new Date())}  |  Pagina ${page} de ${pages}`, 42, 812) }
+  for (let page = 1; page <= pages; page += 1) { doc.setPage(page); doc.setTextColor(120, 129, 145); doc.setFontSize(8); doc.text(`Generado el ${new Intl.DateTimeFormat('es-VE', { dateStyle: 'medium' }).format(new Date())}  |  Página ${page} de ${pages}`, 42, 812) }
   doc.save(filename)
 }
 
@@ -89,11 +89,13 @@ export const downloadReceiptPdf = async (filename: string, receipt: ReceiptPdfDa
 
   const infoY = tableY + 145
   doc.setTextColor(...muted); doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.text('REGISTRADO POR', 42, infoY); doc.text('OBSERVACIONES', width / 2 + 8, infoY)
-  doc.setTextColor(...ink); doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.text(receipt.registeredBy || 'Administracion', 42, infoY + 19); doc.text(receipt.notes || 'Pago procesado correctamente.', width / 2 + 8, infoY + 19, { maxWidth: width / 2 - 50 })
+  doc.setTextColor(...ink); doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.text(receipt.registeredBy || 'Administración', 42, infoY + 19); doc.text(receipt.notes || 'Pago procesado correctamente.', width / 2 + 8, infoY + 19, { maxWidth: width / 2 - 50 })
   doc.setFillColor(247, 249, 253); doc.roundedRect(42, 730, width - 84, 46, 10, 10, 'F')
   doc.setTextColor(...muted); doc.setFont('helvetica', 'normal'); doc.setFontSize(8); doc.text('Este documento certifica la recepcion del pago indicado. Conserve este recibo para sus registros.', 60, 750)
   doc.setTextColor(...navy); doc.setFont('helvetica', 'bold'); doc.text('CEI Manuel Felipe Rugeles · Sistema administrativo y financiero', 60, 766)
   doc.save(filename)
 }
+
+
 
 

@@ -11,3 +11,5 @@ export const Skeleton = ({ className, variant = 'text' }: SkeletonProps) => {
   return <div className={cn('animate-pulse bg-neutral-200 rounded h-4', className)} />
 }
 
+
+

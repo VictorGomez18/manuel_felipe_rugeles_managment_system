@@ -7,7 +7,7 @@ const getPageMeta = (pathname: string) => {
   if (pathname.startsWith('/alumnos/')) {
     return {
       title: 'Detalle de alumno',
-      subtitle: 'Resumen academico, financiero y administrativo del estudiante.',
+      subtitle: 'Resumen académico, financiero y administrativo del estudiante.',
     }
   }
 
@@ -28,25 +28,25 @@ const getPageMeta = (pathname: string) => {
   if (pathname.startsWith('/empleados/')) {
     return {
       title: 'Detalle de empleado',
-      subtitle: 'Ficha laboral, historial de nomina y pagos asociados.',
+      subtitle: 'Ficha laboral, historial de nómina y pagos asociados.',
     }
   }
 
   const pageTitles: Record<string, { title: string; subtitle?: string }> = {
     '/dashboard': { title: 'Dashboard', subtitle: 'Resumen administrativo y financiero del centro.' },
-    '/alumnos': { title: 'Alumnos', subtitle: 'Gestion de estudiantes y su informacion.' },
-    '/representantes': { title: 'Representantes', subtitle: 'Gestion de contacto, relacion y seguimiento por representante.' },
-    '/salones': { title: 'Salones y niveles', subtitle: 'Estructura academica y administrativa del centro.' },
-    '/mensualidades': { title: 'Mensualidades', subtitle: 'Control de obligaciones mensuales y generacion por periodo.' },
-    '/pagos': { title: 'Pagos', subtitle: 'Registro, anulacion y consulta de recibos emitidos.' },
+    '/alumnos': { title: 'Alumnos', subtitle: 'Gestión de estudiantes y su información.' },
+    '/representantes': { title: 'Representantes', subtitle: 'Gestión de contacto, relacion y seguimiento por representante.' },
+    '/salones': { title: 'Salones y niveles', subtitle: 'Estructura académica y administrativa del centro.' },
+    '/mensualidades': { title: 'Mensualidades', subtitle: 'Control de obligaciones mensuales y generación por periodo.' },
+    '/pagos': { title: 'Pagos', subtitle: 'Registro, anulación y consulta de recibos emitidos.' },
     '/cuentas-por-cobrar': { title: 'Cuentas por cobrar', subtitle: 'Seguimiento de saldos pendientes, vencimientos y riesgo de cobranza.' },
-    '/gastos': { title: 'Gastos', subtitle: 'Control de egresos, categorias y anulaciones operativas.' },
-    '/empleados': { title: 'Empleados', subtitle: 'Gestion del personal, salarios y condiciones laborales.' },
-    '/nomina': { title: 'Nomina', subtitle: 'Causacion y pagos de periodos de nomina del personal.' },
-    '/reportes': { title: 'Reportes', subtitle: 'Analisis consolidado de cobranzas, gastos y compromisos.' },
-    '/usuarios': { title: 'Usuarios y roles', subtitle: 'Administracion de perfiles, roles operativos y acceso al sistema.' },
-    '/configuracion': { title: 'Configuracion', subtitle: 'Parametros base del sistema y del centro.' },
-    '/auditoria': { title: 'Auditoria', subtitle: 'Seguimiento de cambios sensibles del sistema.' },
+    '/gastos': { title: 'Gastos', subtitle: 'Control de egresos, categorías y anulaciones operativas.' },
+    '/empleados': { title: 'Empleados', subtitle: 'Gestión del personal, salarios y condiciones laborales.' },
+    '/nomina': { title: 'Nómina', subtitle: 'Causación y pagos de períodos de nómina del personal.' },
+    '/reportes': { title: 'Reportes', subtitle: 'Análisis consolidado de cobranzas, gastos y compromisos.' },
+    '/usuarios': { title: 'Usuarios y roles', subtitle: 'Administración de perfiles, roles operativos y acceso al sistema.' },
+    '/configuracion': { title: 'Configuración', subtitle: 'Parámetros base del sistema y del centro.' },
+    '/auditoria': { title: 'Auditoría', subtitle: 'Seguimiento de cambios sensibles del sistema.' },
   }
 
   return pageTitles[pathname] ?? pageTitles['/dashboard']
@@ -77,3 +77,9 @@ export const AppLayout = () => {
     </div>
   )
 }
+
+
+
+
+
+

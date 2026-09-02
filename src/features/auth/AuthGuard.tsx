@@ -7,7 +7,7 @@ const AuthLoadingState = ({ message }: { message: string }) => (
   <div className="mx-auto flex min-h-screen w-full max-w-content items-center justify-center px-4 py-8">
     <Card className="w-full max-w-lg">
       <div className="space-y-2 text-center">
-        <h1 className="text-xl font-semibold tracking-[-0.03em] text-neutral-900">Cargando sesion</h1>
+        <h1 className="text-xl font-semibold tracking-[-0.03em] text-neutral-900">Cargando sesión</h1>
         <p className="text-sm text-neutral-500">{message}</p>
       </div>
     </Card>
@@ -19,7 +19,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const location = useLocation()
 
   if (isLoading) {
-    return <AuthLoadingState message="Estamos validando tus permisos y restaurando la sesion actual." />
+    return <AuthLoadingState message="Estamos validando tus permisos y restaurando la sesión actual." />
   }
 
   if (!isAuthenticated) {
@@ -33,7 +33,7 @@ export const GuestRoute = ({ children }: { children: ReactNode }) => {
   const { isAuthenticated, isLoading } = useAuth()
 
   if (isLoading) {
-    return <AuthLoadingState message="Estamos verificando si ya existe una sesion activa." />
+    return <AuthLoadingState message="Estamos verificando si ya existe una sesión activa." />
   }
 
   if (isAuthenticated) {
@@ -42,5 +42,7 @@ export const GuestRoute = ({ children }: { children: ReactNode }) => {
 
   return <>{children}</>
 }
+
+
 
 
