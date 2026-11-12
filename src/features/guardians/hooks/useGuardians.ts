@@ -2,6 +2,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDebouncedValue } from '../../../hooks/useDebouncedValue'
 import { supabase } from '../../../lib/supabase'
+import { guardianContactPayload } from '../contactValidation'
 import type { Guardian, GuardianFormValues, GuardianStudentSummary } from '../types'
 
 const PAGE_SIZE = 10
@@ -247,8 +248,7 @@ const createGuardian = async (values: GuardianFormValues) => {
     full_name: values.fullName.trim(),
     document_type: documentType,
     document_number: documentNumber,
-    phone: values.phone.trim(),
-    email: values.email.trim(),
+    ...guardianContactPayload(values),
     address: values.address.trim(),
     notes: values.notes?.trim() || null,
     is_active: values.isActive,
@@ -272,8 +272,7 @@ const updateGuardian = async ({ id, values }: { id: string; values: GuardianForm
       full_name: values.fullName.trim(),
       document_type: documentType,
       document_number: documentNumber,
-      phone: values.phone.trim(),
-      email: values.email.trim(),
+      ...guardianContactPayload(values),
       address: values.address.trim(),
       notes: values.notes?.trim() || null,
       is_active: values.isActive,

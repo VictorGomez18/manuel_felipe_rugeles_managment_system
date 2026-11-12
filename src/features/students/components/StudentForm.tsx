@@ -10,6 +10,7 @@ import { SearchEntityInput } from '../../../components/ui/SearchEntityInput'
 import { Select } from '../../../components/ui/Select'
 import { cn } from '../../../lib/utils'
 import { useStudents } from '../hooks/useStudents'
+import { guardianEmailSchema, guardianPhoneSchema, phoneError } from '../../guardians/contactValidation'
 import type { StudentFormValues } from '../types'
 
 const studentSchema = z.object({
@@ -33,8 +34,8 @@ const studentSchema = z.object({
   if (value.representativeMode === 'new') {
     if (!value.newGuardianName || value.newGuardianName.length < 3) context.addIssue({ code: 'custom', path: ['newGuardianName'], message: 'El nombre del representante es obligatorio' })
     if (!value.newGuardianDocument || value.newGuardianDocument.length < 5) context.addIssue({ code: 'custom', path: ['newGuardianDocument'], message: 'El documento es obligatorio' })
-    if (!value.newGuardianPhone || !/^0?\\d{10,11}$/.test(value.newGuardianPhone)) context.addIssue({ code: 'custom', path: ['newGuardianPhone'], message: 'Ingresa un teléfono válido de 10 u 11 dígitos' })
-    if (!value.newGuardianEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.newGuardianEmail)) context.addIssue({ code: 'custom', path: ['newGuardianEmail'], message: 'El email no es válido' })
+    if (!guardianPhoneSchema.safeParse(value.newGuardianPhone).success) context.addIssue({ code: 'custom', path: ['newGuardianPhone'], message: phoneError })
+    if (!guardianEmailSchema.safeParse(value.newGuardianEmail ?? '').success) context.addIssue({ code: 'custom', path: ['newGuardianEmail'], message: 'El email no es válido' })
     if (!value.newGuardianAddress || value.newGuardianAddress.length < 5) context.addIssue({ code: 'custom', path: ['newGuardianAddress'], message: 'La dirección es obligatoria' })
   }
 })
@@ -76,8 +77,6 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
 
   const representativeMode = useWatch({ control, name: 'representativeMode' })
   const monthlyFee = useWatch({ control, name: 'monthlyFee' })
-  const levelId = useWatch({ control, name: 'levelId' })
-  const filteredClassrooms = classrooms.filter((classroom) => !levelId || classroom.levelId === levelId)
   const matches = representativeQuery ? searchRepresentatives(representativeQuery).slice(0, 5) : []
   const selectedRepresentative = useMemo(() => representatives.find((item) => item.id === selectedRepresentativeId) ?? null, [representatives, selectedRepresentativeId])
 
@@ -89,12 +88,12 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
 
   useEffect(() => {
     const currentClassroomId = getValues('classroomId')
-    const classroomStillValid = filteredClassrooms.some((classroom) => classroom.id === currentClassroomId)
+    const classroomStillValid = classrooms.some((classroom) => classroom.id === currentClassroomId)
 
     if (!classroomStillValid) {
-      setValue('classroomId', filteredClassrooms[0]?.id ?? '')
+      setValue('classroomId', classrooms[0]?.id ?? '')
     }
-  }, [filteredClassrooms, getValues, setValue])
+  }, [classrooms, getValues, setValue])
 
   const activateExistingMode = () => {
     setValue('representativeMode', 'existing')
@@ -109,6 +108,11 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
   const submitStudent = async (values: StudentSchemaValues) => {
     if (values.representativeMode === 'existing' && !selectedRepresentative) {
       setSubmitError('Selecciona un representante existente o registra uno nuevo.')
+      return
+    }
+
+    if (!levels.some((level) => level.id === values.levelId) || !classrooms.some((classroom) => classroom.id === values.classroomId)) {
+      setSubmitError('Selecciona un nivel y un sal\u00f3n disponibles.')
       return
     }
 
@@ -130,7 +134,7 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
             fullName: values.newGuardianName!.trim(),
             document: values.newGuardianDocument!.trim(),
             phone: values.newGuardianPhone!.trim(),
-            email: values.newGuardianEmail!.trim(),
+            email: values.newGuardianEmail?.trim() ?? '',
             address: values.newGuardianAddress!.trim(),
             relationship: values.newGuardianRelationship?.trim() || 'Representante',
           }
@@ -153,10 +157,11 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
         </div>
       </FormSection>
 
+      {submitError ? <p className="text-xs text-danger">{submitError}</p> : null}
       <FormSection icon={<BookOpenText className="h-5 w-5" />} title="Información académica" description="Selecciona el nivel, salón y fecha de ingreso del alumno.">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Nivel</label><Select {...register('levelId')} error={!!errors.levelId} disabled={isLoading || levels.length === 0}>{levels.length === 0 ? <option value="">Sin niveles disponibles</option> : null}{levels.map((level) => <option key={level.id} value={level.id}>{level.name}</option>)}</Select>{errors.levelId ? <p className="mt-1.5 text-xs text-danger">{errors.levelId.message}</p> : null}</div>
-          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Salón</label><Select {...register('classroomId')} error={!!errors.classroomId} disabled={isLoading || filteredClassrooms.length === 0}>{filteredClassrooms.length === 0 ? <option value="">Sin salones disponibles</option> : null}{filteredClassrooms.map((classroom) => <option key={classroom.id} value={classroom.id}>{classroom.name}</option>)}</Select>{errors.classroomId ? <p className="mt-1.5 text-xs text-danger">{errors.classroomId.message}</p> : null}</div>
+          <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Salón</label><Select {...register('classroomId')} error={!!errors.classroomId} disabled={isLoading || classrooms.length === 0}>{classrooms.length === 0 ? <option value="">Sin salones disponibles</option> : null}{classrooms.map((classroom) => <option key={classroom.id} value={classroom.id}>{classroom.name}</option>)}</Select>{errors.classroomId ? <p className="mt-1.5 text-xs text-danger">{errors.classroomId.message}</p> : null}</div>
           <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Fecha de ingreso</label><Input type="date" {...register('enrollmentDate')} error={!!errors.enrollmentDate} rightIcon={<CalendarDays className="h-4 w-4" />} />{errors.enrollmentDate ? <p className="mt-1.5 text-xs text-danger">{errors.enrollmentDate.message}</p> : null}</div>
         </div>
       </FormSection>
@@ -202,14 +207,13 @@ export const StudentForm = ({ onSubmit, initialData, initialRepresentativeId, in
                 </div>
               ) : null}
             />
-            {submitError ? <p className="text-xs text-danger">{submitError}</p> : null}
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Nombre completo</label><Input {...register('newGuardianName')} error={!!errors.newGuardianName} placeholder="Maria Perez" />{errors.newGuardianName ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianName.message}</p> : null}</div>
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Documento</label><Input {...register('newGuardianDocument')} error={!!errors.newGuardianDocument} placeholder="V-12345678" />{errors.newGuardianDocument ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianDocument.message}</p> : null}</div>
-            <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label><Input inputMode="numeric" maxLength={11} {...register('newGuardianPhone')} error={!!errors.newGuardianPhone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />{errors.newGuardianPhone ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianPhone.message}</p> : null}</div>
-            <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Email</label><Input type="email" {...register('newGuardianEmail')} error={!!errors.newGuardianEmail} placeholder="correo@email.com" rightIcon={<Mail className="h-4 w-4" />} />{errors.newGuardianEmail ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianEmail.message}</p> : null}</div>
+            <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label><Input type="tel" inputMode="tel" {...register('newGuardianPhone')} error={!!errors.newGuardianPhone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />{errors.newGuardianPhone ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianPhone.message}</p> : null}</div>
+            <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Email (opcional)</label><Input type="email" {...register('newGuardianEmail')} error={!!errors.newGuardianEmail} placeholder="correo@email.com" rightIcon={<Mail className="h-4 w-4" />} />{errors.newGuardianEmail ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianEmail.message}</p> : null}</div>
             <div><label className="mb-1.5 block text-sm font-medium text-neutral-700">Parentesco</label><Input {...register('newGuardianRelationship')} placeholder="Madre" /></div>
             <div className="md:col-span-2"><label className="mb-1.5 block text-sm font-medium text-neutral-700">Dirección</label><Input {...register('newGuardianAddress')} error={!!errors.newGuardianAddress} placeholder="Av. Principal, Calle 5, Casa 23" rightIcon={<MapPin className="h-4 w-4" />} />{errors.newGuardianAddress ? <p className="mt-1.5 text-xs text-danger">{errors.newGuardianAddress.message}</p> : null}</div>
           </div>

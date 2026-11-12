@@ -1,5 +1,6 @@
 ﻿import { useMemo, useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { guardianContactPayload } from '../../guardians/contactValidation'
 import { appCurrentDate } from '../../../lib/format'
 import { supabase } from '../../../lib/supabase'
 import type {
@@ -244,6 +245,8 @@ const mapStudentRecord = (record: {
   currency: 'USD' | 'VES'
   notes?: string | null
   classroom_id?: string | null
+  level_id?: string | null
+  student_level?: { id: string; name: string } | { id: string; name: string }[] | null
   primary_guardian_id?: string | null
   classrooms?: {
     id: string
@@ -278,7 +281,8 @@ const mapStudentRecord = (record: {
   const classroom = Array.isArray(record.classrooms) ? record.classrooms[0] : record.classrooms
   const guardian = Array.isArray(record.guardians) ? record.guardians[0] : record.guardians
   const classroomLevels = classroom?.levels
-  const level = Array.isArray(classroomLevels) ? classroomLevels[0] : classroomLevels
+  const ownLevel = Array.isArray(record.student_level) ? record.student_level[0] : record.student_level
+  const level = ownLevel ?? (Array.isArray(classroomLevels) ? classroomLevels[0] : classroomLevels)
   const primaryRelation = (record.student_guardians ?? []).find(
     (relation) => relation.is_primary && relation.guardian_id === record.primary_guardian_id,
   )
@@ -293,7 +297,7 @@ const mapStudentRecord = (record: {
     document: formatDocument(record.document_type, record.document_number),
     birthDate: record.birth_date ?? '',
     level: level?.name ?? 'Sin nivel',
-    levelId: classroom?.level_id ?? level?.id ?? null,
+    levelId: record.level_id ?? classroom?.level_id ?? level?.id ?? null,
     classroom: classroom?.name ?? 'Sin salón',
     classroomId: record.classroom_id,
     monthlyFee: Number(record.monthly_fee ?? 0),
@@ -363,6 +367,8 @@ const fetchStudents = async (): Promise<Student[]> => {
       currency,
       notes,
       classroom_id,
+      level_id,
+      student_level:levels!students_level_id_fkey ( id, name ),
       primary_guardian_id,
       classrooms (
         id,
@@ -451,6 +457,8 @@ const fetchStudentDetail = async (id: string): Promise<StudentDetailRecord | nul
         currency,
         notes,
         classroom_id,
+        level_id,
+        student_level:levels!students_level_id_fkey ( id, name ),
         primary_guardian_id,
         classrooms (
           id,
@@ -594,6 +602,7 @@ const fetchStudentDetail = async (id: string): Promise<StudentDetailRecord | nul
 
 const createGuardian = async (input: NewGuardianInput) => {
   const { documentType, documentNumber } = parseDocument(input.document)
+  const contact = guardianContactPayload(input)
 
   if (!supabase) {
     const representative: Representative = {
@@ -602,8 +611,8 @@ const createGuardian = async (input: NewGuardianInput) => {
       documentType,
       documentNumber,
       document: formatDocument(documentType, documentNumber),
-      phone: input.phone.trim(),
-      email: input.email.trim(),
+      phone: contact.phone,
+      email: contact.email ?? '',
       address: input.address.trim(),
       relationship: input.relationship?.trim() || 'Representante',
     }
@@ -618,8 +627,7 @@ const createGuardian = async (input: NewGuardianInput) => {
       full_name: input.fullName.trim(),
       document_type: documentType,
       document_number: documentNumber,
-      phone: input.phone.trim(),
-      email: input.email.trim(),
+      ...contact,
       address: input.address.trim(),
     })
     .select('id, full_name, document_type, document_number, phone, email, address')
@@ -688,6 +696,7 @@ const createStudent = async (input: StudentFormValues) => {
       birth_date: input.birthDate,
       enrollment_date: input.enrollmentDate,
       classroom_id: input.classroomId,
+      level_id: input.levelId,
       monthly_fee: input.monthlyFee,
       currency: input.currency,
       status: 'active',
@@ -763,6 +772,7 @@ const updateStudent = async ({ id, values }: { id: string; values: StudentFormVa
       birth_date: values.birthDate,
       enrollment_date: values.enrollmentDate,
       classroom_id: values.classroomId,
+      level_id: values.levelId,
       monthly_fee: values.monthlyFee,
       currency: values.currency,
       primary_guardian_id: guardianId,

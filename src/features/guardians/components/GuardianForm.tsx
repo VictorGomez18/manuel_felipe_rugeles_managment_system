@@ -5,13 +5,14 @@ import { Mail, MapPin, Phone, UserRound } from 'lucide-react'
 import { FormSection } from '../../../components/ui/FormSection'
 import { Input } from '../../../components/ui/Input'
 import { Select } from '../../../components/ui/Select'
+import { guardianEmailSchema, guardianPhoneSchema } from '../contactValidation'
 import type { GuardianFormValues } from '../types'
 
 const guardianSchema = z.object({
   fullName: z.string().trim().min(3, 'El nombre es obligatorio').regex(/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ' -]+$/, 'El nombre solo puede contener letras'),
-  document: z.string().trim().min(5, 'El documento es obligatorio').regex(/^[VEJGPvejpg]-?\\d{5,10}$/, 'Ingresa un documento válido, por ejemplo V-12345678'),
-  phone: z.string().trim().regex(/^0?\\d{10,11}$/, 'Ingresa un teléfono válido de 10 u 11 dígitos'),
-  email: z.string().email('El correo no es válido'),
+  document: z.string().trim().min(5, 'El documento es obligatorio').regex(/^[VEJGPvejpg]-?\d{5,10}$/, 'Ingresa un documento válido, por ejemplo V-12345678'),
+  phone: guardianPhoneSchema,
+  email: guardianEmailSchema,
   address: z.string().min(5, 'La dirección es obligatoria'),
   notes: z.string().optional(),
   isActive: z.enum(['true', 'false']),
@@ -34,7 +35,7 @@ export const GuardianForm = ({ onSubmit, initialValues, formId = 'guardian-form'
     resolver: zodResolver(guardianSchema),
     defaultValues: initialValues
       ? { ...initialValues, isActive: initialValues.isActive ? 'true' : 'false' }
-      : { isActive: 'true' },
+      : { isActive: 'true', email: '' },
   })
 
   return (
@@ -67,11 +68,11 @@ export const GuardianForm = ({ onSubmit, initialValues, formId = 'guardian-form'
           </div>
           <div>
             <label className="mb-1.5 block text-sm font-medium text-neutral-700">Teléfono</label>
-            <Input inputMode="numeric" maxLength={11} {...register('phone')} error={!!errors.phone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />
+            <Input type="tel" inputMode="tel" {...register('phone')} error={!!errors.phone} placeholder="0414-1234567" rightIcon={<Phone className="h-4 w-4" />} />
             {errors.phone ? <p className="mt-1.5 text-xs text-danger">{errors.phone.message}</p> : null}
           </div>
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Email</label>
+            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Email (opcional)</label>
             <Input type="email" {...register('email')} error={!!errors.email} placeholder="correo@email.com" rightIcon={<Mail className="h-4 w-4" />} />
             {errors.email ? <p className="mt-1.5 text-xs text-danger">{errors.email.message}</p> : null}
           </div>
